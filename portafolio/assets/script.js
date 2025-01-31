@@ -28,18 +28,9 @@ document.getElementById('language-select').addEventListener('change', (event) =>
 // Inicializar con el idioma por defecto
 updateContent(currentLang);
 
+// Puedes agregar interactividad con JavaScript aquí
 document.getElementById('contact-form').addEventListener('submit', function(event) {
     event.preventDefault();
-
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const message = document.getElementById('message').value;
-
-    if (name && email && message) {
-        alert(`Gracias ${name}, hemos recibido tu mensaje.`);
-        // Aquí podrías enviar el formulario a través de una API o correo electrónico.
-        this.reset();
-    } else {
-        alert('Por favor, completa todos los campos.');
-    }
+    alert('Gracias por tu mensaje. Te contactaré pronto.');
+    // Aquí podrías agregar código para enviar el formulario a un servidor
 });
