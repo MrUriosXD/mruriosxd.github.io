@@ -1,0 +1,17 @@
+{
+    "title": "Mi Portafolio",
+    "about": "Sobre Mí",
+    "aboutText": "¡Hola! Soy [Tu Nombre], un apasionado desarrollador web con experiencia en HTML, CSS y JavaScript. Me encanta crear sitios web interactivos y funcionales.",
+    "projects": "Proyectos",
+    "project1": "Proyecto 1",
+    "project2": "Proyecto 2",
+    "project3": "Proyecto 3",
+    "projectDescription": "Descripción breve del proyecto.",
+    "viewProject": "Ver Proyecto",
+    "contact": "Contacto",
+    "name": "Nombre:",
+    "email": "Email:",
+    "message": "Mensaje:",
+    "send": "Enviar",
+    "footer": "© 2023 [Tu Nombre]. Todos los derechos reservados."
+}

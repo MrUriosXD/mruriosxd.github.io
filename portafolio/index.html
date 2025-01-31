@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Portafolio</title>
+    <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 data-lang="title">Mi Portafolio</h1>
+            <nav>
+                <ul>
+                    <li><a href="#about" data-lang="about">Sobre Mí</a></li>
+                    <li><a href="#projects" data-lang="projects">Proyectos</a></li>
+                    <li><a href="#contact" data-lang="contact">Contacto</a></li>
+                </ul>
+            </nav>
+            <div class="language-switcher">
+                <select id="language-select">
+                    <option value="es">Castellano</option>
+                    <option value="va">Valenciano</option>
+                    <option value="en">English</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <section id="about" class="section">
+        <div class="container">
+            <h2 data-lang="about">Sobre Mí</h2>
+            <p data-lang="aboutText">¡Hola! Soy [Tu Nombre], un apasionado desarrollador web con experiencia en HTML, CSS y JavaScript. Me encanta crear sitios web interactivos y funcionales.</p>
+        </div>
+    </section>
+
+    <section id="projects" class="section">
+        <div class="container">
+            <h2 data-lang="projects">Proyectos</h2>
+            <div class="projects-grid">
+                <div class="project">
+                    <h3 data-lang="project1">Proyecto 1</h3>
+                    <p data-lang="projectDescription">Descripción breve del proyecto 1.</p>
+                    <a href="#" class="btn" data-lang="viewProject">Ver Proyecto</a>
+                </div>
+                <div class="project">
+                    <h3 data-lang="project2">Proyecto 2</h3>
+                    <p data-lang="projectDescription">Descripción breve del proyecto 2.</p>
+                    <a href="#" class="btn" data-lang="viewProject">Ver Proyecto</a>
+                </div>
+                <div class="project">
+                    <h3 data-lang="project3">Proyecto 3</h3>
+                    <p data-lang="projectDescription">Descripción breve del proyecto 3.</p>
+                    <a href="#" class="btn" data-lang="viewProject">Ver Proyecto</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <div class="container">
+            <h2 data-lang="contact">Contacto</h2>
+            <form id="contact-form">
+                <label for="name" data-lang="name">Nombre:</label>
+                <input type="text" id="name" name="name" required>
+                
+                <label for="email" data-lang="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                
+                <label for="message" data-lang="message">Mensaje:</label>
+                <textarea id="message" name="message" required></textarea>
+                
+                <button type="submit" class="btn" data-lang="send">Enviar</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p data-lang="footer">&copy; 2023 [Tu Nombre]. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

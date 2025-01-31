@@ -1,0 +1,17 @@
+{
+    "title": "My Portfolio",
+    "about": "About Me",
+    "aboutText": "Hello! I'm [Your Name], a passionate web developer with experience in HTML, CSS, and JavaScript. I love creating interactive and functional websites.",
+    "projects": "Projects",
+    "project1": "Project 1",
+    "project2": "Project 2",
+    "project3": "Project 3",
+    "projectDescription": "Brief description of the project.",
+    "viewProject": "View Project",
+    "contact": "Contact",
+    "name": "Name:",
+    "email": "Email:",
+    "message": "Message:",
+    "send": "Send",
+    "footer": "© 2023 [Your Name]. All rights reserved."
+}
