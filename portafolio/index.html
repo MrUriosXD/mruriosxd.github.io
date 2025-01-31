@@ -4,83 +4,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Portafolio</title>
-    <link rel="stylesheet" href="assets/styles.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     <header>
-        <div class="container">
-            <h1 data-lang="title">Mi Portafolio</h1>
-            <nav>
-                <ul>
-                    <li><a href="#about" data-lang="about">Sobre Mí</a></li>
-                    <li><a href="#projects" data-lang="projects">Proyectos</a></li>
-                    <li><a href="#contact" data-lang="contact">Contacto</a></li>
-                </ul>
-            </nav>
-            <div class="language-switcher">
-                <select id="language-select">
-                    <option value="es">Castellano</option>
-                    <option value="va">Valenciano</option>
-                    <option value="en">English</option>
-                </select>
-            </div>
-        </div>
+        <nav>
+            <ul>
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#proyectos">Proyectos</a></li>
+                <li><a href="#sobre-mi">Sobre mí</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <section id="about" class="section">
-        <div class="container">
-            <h2 data-lang="about">Sobre Mí</h2>
-            <p data-lang="aboutText">¡Hola! Soy [Tu Nombre], un apasionado desarrollador web con experiencia en HTML, CSS y JavaScript. Me encanta crear sitios web interactivos y funcionales.</p>
+    <section id="inicio" class="hero">
+        <div class="hero-content">
+            <h1>Bienvenido a mi Portafolio</h1>
+            <p>Desarrollador web apasionado por la tecnología.</p>
         </div>
     </section>
 
-    <section id="projects" class="section">
-        <div class="container">
-            <h2 data-lang="projects">Proyectos</h2>
-            <div class="projects-grid">
-                <div class="project">
-                    <h3 data-lang="project1">Proyecto 1</h3>
-                    <p data-lang="projectDescription">Descripción breve del proyecto 1.</p>
-                    <a href="#" class="btn" data-lang="viewProject">Ver Proyecto</a>
-                </div>
-                <div class="project">
-                    <h3 data-lang="project2">Proyecto 2</h3>
-                    <p data-lang="projectDescription">Descripción breve del proyecto 2.</p>
-                    <a href="#" class="btn" data-lang="viewProject">Ver Proyecto</a>
-                </div>
-                <div class="project">
-                    <h3 data-lang="project3">Proyecto 3</h3>
-                    <p data-lang="projectDescription">Descripción breve del proyecto 3.</p>
-                    <a href="#" class="btn" data-lang="viewProject">Ver Proyecto</a>
-                </div>
+    <section id="proyectos" class="projects">
+        <h2>Mis Proyectos</h2>
+        <div class="project-list">
+            <div class="project-card">
+                <h3>Proyecto 1</h3>
+                <p>Descripción breve del proyecto 1.</p>
             </div>
+            <div class="project-card">
+                <h3>Proyecto 2</h3>
+                <p>Descripción breve del proyecto 2.</p>
+            </div>
+            <!-- Puedes agregar más proyectos aquí -->
         </div>
     </section>
 
-    <section id="contact" class="section">
-        <div class="container">
-            <h2 data-lang="contact">Contacto</h2>
-            <form id="contact-form">
-                <label for="name" data-lang="name">Nombre:</label>
-                <input type="text" id="name" name="name" required>
-                
-                <label for="email" data-lang="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-                
-                <label for="message" data-lang="message">Mensaje:</label>
-                <textarea id="message" name="message" required></textarea>
-                
-                <button type="submit" class="btn" data-lang="send">Enviar</button>
-            </form>
-        </div>
+    <section id="sobre-mi" class="about">
+        <h2>Sobre Mí</h2>
+        <p>Aquí puedes escribir algo sobre ti, tus habilidades y experiencia.</p>
+    </section>
+
+    <section id="contacto" class="contact">
+        <h2>Contacto</h2>
+        <form id="contact-form">
+            <label for="name">Nombre:</label>
+            <input type="text" id="name" name="name" required>
+            
+            <label for="email">Correo Electrónico:</label>
+            <input type="email" id="email" name="email" required>
+            
+            <label for="message">Mensaje:</label>
+            <textarea id="message" name="message" rows="4" required></textarea>
+            
+            <button type="submit">Enviar</button>
+        </form>
     </section>
 
     <footer>
-        <div class="container">
-            <p data-lang="footer">&copy; 2023 [Tu Nombre]. Todos los derechos reservados.</p>
-        </div>
+        <p>&copy; 2023 Mi Nombre. Todos los derechos reservados.</p>
     </footer>
 
-    <script src="assets/script.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
