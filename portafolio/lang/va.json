@@ -1,0 +1,17 @@
+{
+    "title": "El Meu Portafoli",
+    "about": "Sobre Mi",
+    "aboutText": "Hola! Sóc [El Teu Nom], un apassionat desenvolupador web amb experiència en HTML, CSS i JavaScript. M'encanta crear llocs web interactius i funcionals.",
+    "projects": "Projectes",
+    "project1": "Projecte 1",
+    "project2": "Projecte 2",
+    "project3": "Projecte 3",
+    "projectDescription": "Descripció breu del projecte.",
+    "viewProject": "Veure Projecte",
+    "contact": "Contacte",
+    "name": "Nom:",
+    "email": "Email:",
+    "message": "Missatge:",
+    "send": "Enviar",
+    "footer": "© 2023 [El Teu Nom]. Tots els drets reservats."
+}
