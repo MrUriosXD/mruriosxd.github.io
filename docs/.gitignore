@@ -1,0 +1,9 @@
+_site/
+_themes/
+vendor/
+Gemfile
+Gemfile.lock
+.jekyll-metadata
+key_public.pem
+key_private.key
+.sass-cache/
