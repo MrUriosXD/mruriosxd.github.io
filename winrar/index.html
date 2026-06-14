@@ -1575,10 +1575,10 @@
                 btnGenerar.querySelector('span').textContent = data.btnGen;
 
                 // Si el nombre está vacío, mostrará "Single User License" (o lo que tú quieras)
-				const userValue = removeVietnameseTones(inputUsername.value, "Anonymous");
+				const userValue = removeAccents(inputUsername.value, "Anonymous");
 				
 				// Si el tipo de licencia está vacío, mostrará "Unlimited Business License"
-				const licenseValue = removeVietnameseTones(inputLicenseType.value, DEFAULT_LICENSE_CODE);
+				const licenseValue = removeAccents(inputLicenseType.value, DEFAULT_LICENSE_CODE);
                 
                 txtKey.value = app(userValue, licenseValue);
                 evaluarEstadoContenido();

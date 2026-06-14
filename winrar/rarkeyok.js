@@ -393,34 +393,48 @@ function app(USER, LIC) {
     KEY_STR = KEY_STR + (data.substring(324, 378)) + "\n";
     return KEY_STR;
 }
-function removeVietnameseTones(str, defaultValue = "ABTech") {
-    str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g,"a"); 
-    str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g,"e"); 
-    str = str.replace(/ì|í|ị|ỉ|ĩ/g,"i"); 
-    str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|0|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g,"o"); 
-    str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g,"u"); 
-    str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g,"y"); 
-    str = str.replace(/đ/g,"d");
-    str = str.replace(/À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ/g, "A");
-    str = str.replace(/È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ/g, "E");
-    str = str.replace(/Ì|Í|Ị|Ỉ|Ĩ/g, "I");
-    str = str.replace(/Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ/g, "O");
-    str = str.replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, "U");
-    str = str.replace(/Y|Ý|Ỵ|Ỷ|Ỹ/g, "Y");
-    str = str.replace(/Đ/g, "D");
+function removeAccents(str, defaultValue = "ABTech") {
+    if (!str) return defaultValue;
+
+    // 1. Mapa de reemplazo dinámico (Cubre Vietnamita, Español, Francés, Alemán, Italiano, Portugués)
+    const map = {
+        'a': /à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ|ä|å|æ/g,
+        'e': /è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ|ë/g,
+        'i': /ì|í|ị|ỉ|ĩ|î|ï/g,
+        'o': /ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ|ö|ø/g,
+        'u': /ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ|û|ü/g,
+        'y': /ỳ|ý|ỵ|ỷ|ỹ|ÿ/g,
+        'd': /đ/g,
+        'c': /ç/g,
+        'n': /ñ/g,
+        'A': /À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ|Ä|Å|Æ/g,
+        'E': /È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ|Ë/g,
+        'I': /Ì|Í|Ị|Ỉ|Ĩ|Î|Ï/g,
+        'O': /Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ|Ö|Ø/g,
+        'U': /Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ|Û|Ü/g,
+        'Y': /Ý|Ỵ|Ỷ|Ỹ/g,
+        'D': /Đ/g,
+        'C': /Ç/g,
+        'N': /Ñ/g
+    };
+
+    // Aplicar los reemplazos del mapa
+    for (let letter in map) {
+        str = str.replace(map[letter], letter);
+    }
+
+    // 2. Limpieza de diacríticos flotantes/Unicode residuales (manteniendo tu lógica original)
     str = str.replace(/\u0300|\u0301|\u0303|\u0309|\u0323/g, "");
     str = str.replace(/\u02C6|\u0306|\u031B/g, "");
-    str = str.replace(/ + /g," ");
-    str = str.trim();
-    str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g," ");
-    
-    // AQUÍ ESTÁ EL CAMBIO: Si está vacío, usa el valor por defecto que le enviemos
-    if (str.length === 0) {
-        return defaultValue;
-    }
-    else {
-        return str;
-    }
+
+    // 3. Quitar caracteres especiales, símbolos y puntuación
+    str = str.replace(/[!@%^\&*()+\=<>?\/,.:;'\"&#\[\]~$_\-`{}|\\ ]/g, " ");
+
+    // 4. Colapsar espacios múltiples y hacer trim
+    str = str.replace(/\s+/g, " ").trim();
+
+    // 5. Retornar valor limpio o el valor por defecto
+    return str.length === 0 ? defaultValue : str;
 }
 function saveTextAsFile() {
   var textToWrite = KEY.value;
