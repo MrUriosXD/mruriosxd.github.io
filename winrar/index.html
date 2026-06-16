@@ -680,6 +680,30 @@
                             <svg class="flag-icon" viewBox="0 0 750 500"><rect width="750" height="500" fill="#c60b1e"/><rect y="125" width="750" height="250" fill="#fbe122"/></svg>
                             <span class="opt-text">Español</span>
                         </li>
+                        <li data-value="ca" class="custom-option">
+                            <svg class="flag-icon" viewBox="0 0 9 5"><rect width="9" height="5" fill="#fbe122"/><rect y="0.5" width="9" height="0.5" fill="#c60b1e"/><rect y="1.5" width="9" height="0.5" fill="#c60b1e"/><rect y="2.5" width="9" height="0.5" fill="#c60b1e"/><rect y="3.5" width="9" height="0.5" fill="#c60b1e"/></svg>
+                            <span class="opt-text">Català</span>
+                        </li>
+                        <li data-value="va" class="custom-option">
+                            <svg class="flag-icon" viewBox="0 0 9 5"><rect width="9" height="5" fill="#fbe122"/><rect y="0.5" width="9" height="0.5" fill="#c60b1e"/><rect y="1.5" width="9" height="0.5" fill="#c60b1e"/><rect y="2.5" width="9" height="0.5" fill="#c60b1e"/><rect y="3.5" width="9" height="0.5" fill="#c60b1e"/><rect width="2" height="5" fill="#0047ab"/></svg>
+                            <span class="opt-text">Valencià</span>
+                        </li>
+                        <li data-value="gl" class="custom-option">
+                            <svg class="flag-icon" viewBox="0 0 3 2"><rect width="3" height="2" fill="#fff"/><polygon points="0,2 3,0 3,0.4 0.6,2" fill="#6cabdd"/></svg>
+                            <span class="opt-text">Galego</span>
+                        </li>
+                        <li data-value="eu" class="custom-option">
+                            <svg class="flag-icon" viewBox="0 0 500 300"><rect width="500" height="300" fill="#2d6a4f"/><polygon points="0,0 500,300 500,300 0,0" stroke="#fff" stroke-width="40"/><polygon points="500,0 0,300 0,300 500,0" stroke="#fff" stroke-width="40"/><line x1="250" y1="0" x2="250" y2="300" stroke="#c60b1e" stroke-width="40"/><line x1="0" y1="150" x2="500" y2="150" stroke="#c60b1e" stroke-width="40"/></svg>
+                            <span class="opt-text">Euskara</span>
+                        </li>
+                        <li data-value="ast" class="custom-option">
+                            <svg class="flag-icon" viewBox="0 0 3 2"><rect width="3" height="2" fill="#6cabdd"/><polygon points="1.5,0.4 1.7,0.9 2.2,0.9 1.8,1.2 2,1.7 1.5,1.4 1,1.7 1.2,1.2 0.8,0.9 1.3,0.9" fill="#fbe122"/><line x1="1.5" y1="0" x2="1.5" y2="2" stroke="#fbe122" stroke-width="0.15"/><line x1="0" y1="1" x2="3" y2="1" stroke="#fbe122" stroke-width="0.15"/></svg>
+                            <span class="opt-text">Asturianu</span>
+                        </li>
+                        <li data-value="an" class="custom-option">
+                            <svg class="flag-icon" viewBox="0 0 3 2"><rect width="3" height="2" fill="#fbe122"/><line x1="0.6" y1="0" x2="0.6" y2="2" stroke="#c60b1e" stroke-width="0.2"/><line x1="1.2" y1="0" x2="1.2" y2="2" stroke="#c60b1e" stroke-width="0.2"/><line x1="1.8" y1="0" x2="1.8" y2="2" stroke="#c60b1e" stroke-width="0.2"/><line x1="2.4" y1="0" x2="2.4" y2="2" stroke="#c60b1e" stroke-width="0.2"/></svg>
+                            <span class="opt-text">Aragonés</span>
+                        </li>
                         <li data-value="en" class="custom-option">
                             <svg class="flag-icon" viewBox="0 0 60 30"><rect width="60" height="30" fill="#00247d"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#cf142b" stroke-width="4"/><path d="M30,0 L30,30 M0,15 L60,15" stroke="#fff" stroke-width="10"/><path d="M30,0 L30,30 M0,15 L60,15" stroke="#cf142b" stroke-width="6"/></svg>
                             <span class="opt-text">English</span>
@@ -875,6 +899,330 @@
 			aboutP2: "Esta aplicación interactiva ha sido diseñada exclusivamente con fines educativos, permitiendo realizar pruebas de concepto y simulaciones funcionales. Su objetivo es ayudar a estudiantes, desarrolladores y administradores de sistemas a comprender el flujo de validación y la lógica de integración de herramientas de software en entornos controlados de aprendizaje y desarrollo.",
 			licListTitle: "🏷 Tipos de licencia disponibles",
 			licListDesc: "Haz clic en cualquier fila para seleccionarla o desmarcarla:",
+			licenses: [
+				{ code: "Single User License", label: "1 PC" },
+				{ code: "Multi User Volume Licenses", label: "2–999 PCs" },
+				{ code: "License for 1000 PCs or more", label: "1000+ PCs" },
+				{ code: "Local Site License", label: "Local Site" },
+				{ code: "Worldwide Unlimited Corporate License", label: "Global Corporate" },
+				{ code: "Academic / Educational License", label: "Academic" }
+			]
+		},
+		ca: {
+            systemLabel: "Sistema",
+			navTitle: "🛠️ Panell de Control WinRAR",
+			heroTitle: "Generador de Claus WinRAR",
+			heroTag: "⚡ Eina de llicències",
+			heroP: "Genera, copia o desa el teu fitxer <code>rarreg.key</code> en segons.",
+			metaJs: "Només JavaScript · sense servidor",
+			metaUsage: "🔒 Només ús personal",
+			genTitle: "🔐 Generador de Llicència",
+			reset: "Netejar",
+			labelUser: "Nom de Registre",
+			hintUser: "Només lletres, números, guionet i espai · Sense accents ni caràcters especials",
+			placeholderUser: "Ex: John Smith",
+			labelLic: "Tipus de Llicència",
+			hintLic: "Fes clic en qualsevol tipus de la llista de sota per seleccionar-lo o desmarcar-lo",
+			placeholderLic: "Ex: Single User License",
+			btnGen: "⚡ Generar Llicència",
+			btnGenLoading: "Processant...",
+			btnSave: "💾 Desar rarreg.key",
+			labelKey: "Llicència Generada",
+			placeholderKey: "La llicència generada apareixerà aquí després de prémer ⚡ Generar…",
+			btnCopy: "Copiar",
+			btnCopied: "¡Copiat!",
+			statusCopied: "¡Contingut copiat amb èxit!",
+			stepsTitle: "📋 Passos per activar",
+			steps: [
+				"Omple els dos camps de dalt",
+				"Prem <strong>⚡ Generar</strong> i espera un instant",
+				"Prem <strong>💾 Desar</strong> i descarrega el fitxer",
+				"Assegura't que el nom sigui exactament <code>rarreg.key</code>",
+				"Copia el fitxer a la carpeta d'instal·lació de WinRAR",
+				"Reinicia WinRAR per aplicar els canvis"
+			],
+			reqTitle: "⚠ Requisits del fitxer",
+			reqs: [
+				"Desar preferiblement con codificació <strong>ANSI</strong>",
+				"Usar només caràcters <strong>ASCII</strong> (sense accents ni caràcters especials)",
+				"No editar el contingut intern del fitxer key",
+				"El fitxer s'ha de dir estrictament <code>rarreg.key</code>"
+			],
+			aboutTitle: "📖 Què és WinRAR?",
+			aboutP1: "<strong>WinRAR</strong> és una de les eines de compressió i descompressió de dades més potents i utilitzades del món, desenvolupada per Eugene Roshal. Permet gestionar fitxers en formats RAR, ZIP i molts altres de manera ràpida i eficient, optimitzant l'espai d'emmagatzematge i facilitant l'enviament de fitxers grans. Per a un ús professional, comercial i completament legítim, recordeu adquirir una llicència oficial al seu lloc web autoritzat.",
+			aboutP2: "Aquesta aplicació interactiva ha estat dissenyada exclusivament amb fins educatius, permetent realitzar proves de concepte i simulacions funcionals. El seu objectiu és ajudar estudiants, desenvolupadors i administradors de sistemes a comprendre el flux de validació i la lògica d'integració d'eines de programari en entorns controlats d'aprenentatge i desenvolupament.",
+			licListTitle: "🏷 Tipos de llicència disponibles",
+			licListDesc: "Fes clic en qualsevol fila per seleccionar-la o desmarcar-la:",
+			licenses: [
+				{ code: "Single User License", label: "1 PC" },
+				{ code: "Multi User Volume Licenses", label: "2–999 PCs" },
+				{ code: "License for 1000 PCs or more", label: "1000+ PCs" },
+				{ code: "Local Site License", label: "Local Site" },
+				{ code: "Worldwide Unlimited Corporate License", label: "Global Corporate" },
+				{ code: "Academic / Educational License", label: "Academic" }
+			]
+		},
+		va: {
+            systemLabel: "Sistema",
+			navTitle: "🛠️ Panell de Control WinRAR",
+			heroTitle: "Generador de Claus WinRAR",
+			heroTag: "⚡ Eina de llicències",
+			heroP: "Genera, copia o guarda el teu fitxer <code>rarreg.key</code> en segons.",
+			metaJs: "Només JavaScript · sense servidor",
+			metaUsage: "🔒 Només ús personal",
+			genTitle: "🔐 Generador de Llicència",
+			reset: "Netejar",
+			labelUser: "Nom de Registre",
+			hintUser: "Només lletres, números, guionet i espai · Sense accents ni caràcters especials",
+			placeholderUser: "Ex: John Smith",
+			labelLic: "Tipus de Llicència",
+			hintLic: "Fes clic en qualsevol tipus de la llista de davall per a seleccionar-lo o desmarcar-lo",
+			placeholderLic: "Ex: Single User License",
+			btnGen: "⚡ Generar Llicència",
+			btnGenLoading: "Processant...",
+			btnSave: "💾 Guardar rarreg.key",
+			labelKey: "Llicència Generada",
+			placeholderKey: "La llicència generada apareixerà ací després de prémer ⚡ Generar…",
+			btnCopy: "Copiar",
+			btnCopied: "¡Copiat!",
+			statusCopied: "¡Contingut copiat amb èxit!",
+			stepsTitle: "📋 Passos per a activar",
+			steps: [
+				"Omple els dos camps de dalt",
+				"Prem <strong>⚡ Generar</strong> i espera un instant",
+				"Prem <strong>💾 Guardar</strong> i descarrega el fitxer",
+				"Assegura't que el nom siga exactament <code>rarreg.key</code>",
+				"Copia el fitxer a la carpeta d'instal·lació de WinRAR",
+				"Reinicia WinRAR per a aplicar els canvis"
+			],
+			reqTitle: "⚠ Requisits del fitxer",
+			reqs: [
+				"Guardar preferiblement con codificació <strong>ANSI</strong>",
+				"Usar només caràcters <strong>ASCII</strong> (sense accents ni caràcters especials)",
+				"No editar el contingut intern del fitxer key",
+				"El fitxer s'ha de dir estrictament <code>rarreg.key</code>"
+			],
+			aboutTitle: "📖 Què és WinRAR?",
+			aboutP1: "<strong>WinRAR</strong> és una de les eines de compressió i descompressió de dades més potents i utilitzades del món, desenvolupada per Eugene Roshal. Permet gestionar fitxers en formats RAR, ZIP i molts altres de manera ràpida i eficient, optimitzant l'espai d'emmagatzematge i facilitant l'enviament de fitxers grans. Per a un ús professional, comercial i completament legítim, recordeu adquirir una llicència oficial al seu lloc web autoritzat.",
+			aboutP2: "Aquesta aplicació interactiva ha estat dissenyada exclusivament amb fins educatius, permetent realitzar proves de concepte i simulacions funcionals. El seu objectiu és ajudar estudiants, desenvolupadors i administradors de sistemes a comprendre el flux de validació i la lògica d'integració d'eines de programari en entorns controlats d'aprenentatge i desenvolupament.",
+			licListTitle: "🏷 Tipos de llicència disponibles",
+			licListDesc: "Fes clic en qualsevol fila per a seleccionar-la o desmarcar-la:",
+			licenses: [
+				{ code: "Single User License", label: "1 PC" },
+				{ code: "Multi User Volume Licenses", label: "2–999 PCs" },
+				{ code: "License for 1000 PCs or more", label: "1000+ PCs" },
+				{ code: "Local Site License", label: "Local Site" },
+				{ code: "Worldwide Unlimited Corporate License", label: "Global Corporate" },
+				{ code: "Academic / Educational License", label: "Academic" }
+			]
+		},
+		gl: {
+            systemLabel: "Sistema",
+			navTitle: "🛠️ Panel de Control WinRAR",
+			heroTitle: "Xerador de Claves WinRAR",
+			heroTag: "⚡ Ferramenta de licenzas",
+			heroP: "Xera, copia ou garda o teu ficheiro <code>rarreg.key</code> en segundos.",
+			metaJs: "Só JavaScript · sen servidor",
+			metaUsage: "🔒 Só uso persoal",
+			genTitle: "🔐 Xerador de Licenza",
+			reset: "Limpar",
+			labelUser: "Nome de Rexistro",
+			hintUser: "Só letras, números, guión e espazo · Sen acentos nin caracteres especiais",
+			placeholderUser: "Ex: John Smith",
+			labelLic: "Tipo de Licenza",
+			hintLic: "Fai clic en calquera tipo da lista de abaixo para seleccionalo ou desmarcalo",
+			placeholderLic: "Ex: Single User License",
+			btnGen: "⚡ Xerar Licenza",
+			btnGenLoading: "Procesando...",
+			btnSave: "💾 Gardar rarreg.key",
+			labelKey: "Licenza Xerada",
+			placeholderKey: "La licenza xerada aparecerá aquí tras pulsar ⚡ Xerar…",
+			btnCopy: "Copiar",
+			btnCopied: "¡Copiado!",
+			statusCopied: "¡Contido copiado con éxito!",
+			stepsTitle: "📋 Pasos para activar",
+			steps: [
+				"Enche os dous campos de arriba",
+				"Preme <strong>⚡ Xerar</strong> e agarda un intre",
+				"Preme <strong>💾 Gardar</strong> e descarga o ficheiro",
+				"Asegúrate de que o nome sexa exactamente <code>rarreg.key</code>",
+				"Copia o ficheiro na carpeta de instalación de WinRAR",
+				"Reinicia WinRAR para aplicar os cambios"
+			],
+			reqTitle: "⚠ Requisitos do ficheiro",
+			reqs: [
+				"Gardar preferiblemente con codificación <strong>ANSI</strong>",
+				"Usar só caracteres <strong>ASCII</strong> (sen acentos nin caracteres especiais)",
+				"No editar o contido interno do ficheiro key",
+				"O ficheiro debe chamarse estritamente <code>rarreg.key</code>"
+			],
+			aboutTitle: "📖 Que é WinRAR?",
+			aboutP1: "<strong>WinRAR</strong> é unha das ferramentas de compresión e descompresión de datos máis potentes e utilizadas do mundo, desenvolvida por Eugene Roshal. Permite xestionar ficheiros en formatos RAR, ZIP e moitos outros de xeito rápido e eficiente, optimizando o espazo de almacenamento e facilitando o envío de ficheiros grandes. Para un uso profesional, comercial e completamente lexítimo, lembre adquirir unha licenza oficial no seu sitio web autorizado.",
+			aboutP2: "Esta aplicación interactiva foi deseñada exclusivamente con fins educativos, permitindo realizar probas de concepto e simulacións funcionais. O seu obxectivo é axudar a estudantes, desenvolvedores e administradores de sistemas a comprender o fluxo de validación e a lóxica de integración de ferramentas de software en contornas controladas de aprendizaxe e desenvolvemento.",
+			licListTitle: "🏷 Tipos de licenza dispoñibles",
+			licListDesc: "Fai clic en calquera fila para seleccionala ou desmarcala:",
+			licenses: [
+				{ code: "Single User License", label: "1 PC" },
+				{ code: "Multi User Volume Licenses", label: "2–999 PCs" },
+				{ code: "License for 1000 PCs or more", label: "1000+ PCs" },
+				{ code: "Local Site License", label: "Local Site" },
+				{ code: "Worldwide Unlimited Corporate License", label: "Global Corporate" },
+				{ code: "Academic / Educational License", label: "Academic" }
+			]
+		},
+		eu: {
+            systemLabel: "Sistema",
+			navTitle: "🛠️ WinRAR Kontrol Panela",
+			heroTitle: "WinRAR Gako Sortzailea",
+			heroTag: "⚡ Lizentzia tresna",
+			heroP: "Sortu, kopiatu edo gorde zure <code>rarreg.key</code> fitxategia segundotan.",
+			metaJs: "JavaScript bakarrik · zerbitzaririk gabe",
+			metaUsage: "🔒 Erabilera pertsonalerako bakarrik",
+			genTitle: "🔐 Lizentzia Sortzailea",
+			reset: "Garbitu",
+			labelUser: "Erregistro Izena",
+			hintUser: "Letrak, zenbakiak, gidoia eta espazioa bakarrik · Ikur berezirik gabe",
+			placeholderUser: "Adib: John Smith",
+			labelLic: "Lizentzia Mota",
+			hintLic: "Egin klik beheko zerrendako edozein motatan hautatzeko edo hautapena kentzeko",
+			placeholderLic: "Adib: Single User License",
+			btnGen: "⚡ Lizentzia Sortu",
+			btnGenLoading: "Prozesatzen...",
+			btnSave: "💾 Gorde rarreg.key",
+			labelKey: "Sortutako Lizentzia",
+			placeholderKey: "Sortutako lizentzia hemen agertuko da ⚡ Sortu sakatu ondoren…",
+			btnCopy: "Kopiatu",
+			btnCopied: "Kopiatuta!",
+			statusCopied: "Edukia ondo kopiatu da!",
+			stepsTitle: "📋 Aktibatzeko urratsak",
+			steps: [
+				"Bete goiko bi eremuak",
+				"Sakatu <strong>⚡ Sortu</strong> eta itxaron une bat",
+				"Sakatu <strong>💾 Gorde</strong> eta fitxategia deskargatu",
+				"Ziurtatu izena zehazki <code>rarreg.key</code> dela",
+				"Kopiatu fitxategia WinRAR instalazio-karpetan",
+				"Berrabiarazi WinRAR aldaketak aplikatzeko"
+			],
+			reqTitle: "⚠ Fitxategiaren baldintzak",
+			reqs: [
+				"Hobe <strong>ANSI</strong> kodetzearekin gordetzea",
+				"Erabili <strong>ASCII</strong> karaktereak bakarrik (azenturik edo ikur berezirik gabe)",
+				"Ez aldatu key fitxategiaren barruko edukia",
+				"Fitxategiak zorrotz <code>rarreg.key</code> izena izan behar du"
+			],
+			aboutTitle: "📖 Zer da WinRAR?",
+			aboutP1: "<strong>WinRAR</strong> datuak konprimitzeko eta deskonprimitzeko tresnarik indartsuenetako eta erabilienetako bat da munduan, Eugene Roshalek garatua. RAR, ZIP eta beste hainbat formatutako fitxategiak azkar eta eraginkortasunez kudeatzeko aukera ematen du, biltegiratze-espazioa optimizatuz eta fitxategi handiak bidaltzea erraztuz. Erabilera profesional, komertzial eta guztiz legitimo baterako, gogoratu lizentzia ofizial bat erostea baimendutako webgunean.",
+			aboutP2: "Aplikazio interaktibo hau hezkuntza-helburuetarako soilik diseinatu da, kontzeptu-probak eta simulazio funtzionalak egiteko aukera emanez. Bere helburua ikasleei, garatzaileei eta sistema-administratzaileei balioztatze-fluxua eta software-tresnen integrazio-logika ulertzen laguntzea da, ikaskuntza- eta garapen-ingurune kontrolatuetan.",
+			licListTitle: "🏷 Eskuragarri dauden lizentzia motak",
+			licListDesc: "Egin klik edozein lerrotan hautatzeko edo hautapena kentzeko:",
+			licenses: [
+				{ code: "Single User License", label: "1 PC" },
+				{ code: "Multi User Volume Licenses", label: "2–999 PCs" },
+				{ code: "License for 1000 PCs or more", label: "1000+ PCs" },
+				{ code: "Local Site License", label: "Local Site" },
+				{ code: "Worldwide Unlimited Corporate License", label: "Global Corporate" },
+				{ code: "Academic / Educational License", label: "Academic" }
+			]
+		},
+		ast: {
+            systemLabel: "Sistema",
+			navTitle: "🛠️ Panel de Control de WinRAR",
+			heroTitle: "Xenerador de Claves de WinRAR",
+			heroTag: "⚡ Ferramienta de llicencies",
+			heroP: "Xenera, copia o guarda'l to ficheru <code>rarreg.key</code> en segundos.",
+			metaJs: "Namái JavaScript · ensin servidor",
+			metaUsage: "🔒 Namái usu personal",
+			genTitle: "🔐 Xenerador de Llicencia",
+			reset: "Llimpiar",
+			labelUser: "Nome de Rexistru",
+			hintUser: "Namái lletres, númberos, guión y espaciu · Ensin tildes nin carauteres especiales",
+			placeholderUser: "Ex: John Smith",
+			labelLic: "Tipu de Llicencia",
+			hintLic: "Fai clic en cualquier tipu de la llista d'abaxo pa seleicionalu o desmarcalu",
+			placeholderLic: "Ex: Single User License",
+			btnGen: "⚡ Xenerar Llicencia",
+			btnGenLoading: "Procesando...",
+			btnSave: "💾 Guardar rarreg.key",
+			labelKey: "Llicencia Xenerada",
+			placeholderKey: "La llicencia xenerada va apaecer equí depués de calcar ⚡ Xenerar…",
+			btnCopy: "Copiar",
+			btnCopied: "¡Copiao!",
+			statusCopied: "¡Conteníu copiao con ésitu!",
+			stepsTitle: "📋 Pasos p'activar",
+			steps: [
+				"Enllena los dos campos d'enriba",
+				"Calca <strong>⚡ Xenerar</strong> y espera un intre",
+				"Calca <strong>💾 Guardar</strong> y descarga'l ficheru",
+				"Asegúrate de que'l nome sía exautamente <code>rarreg.key</code>",
+				"Copia'l ficheru na carpeta d'instalación de WinRAR",
+				"Reanicia WinRAR p'aplicar los cambeos"
+			],
+			reqTitle: "⚠ Requisitos del ficheru",
+			reqs: [
+				"Guardar preferiblemente con codificación <strong>ANSI</strong>",
+				"Usar namái carauteres <strong>ASCII</strong> (ensin tildes nin carauteres especiales)",
+				"Non editar el conteníu internu del ficheru key",
+				"El ficheru tien de llamase puramente <code>rarreg.key</code>"
+			],
+			aboutTitle: "📖 ¿Qué ye WinRAR?",
+			aboutP1: "<strong>WinRAR</strong> ye una de les ferramientas de compresión y descompresión de datos más potentes y utilizaes del mundu, desenvuelta por Eugene Roshal. Permite xestionar ficheros en formatos RAR, ZIP y munchos otros de manera rápida y eficiente, optimizando l'espaciu d'almacenamientu y facilitando l'unvíu de ficheros grandes. Pa un usu profesional, comercial y dafechu llexítimu, recuerde adquirir una llicencia oficial nel so sitiu web autorizáu.",
+			aboutP2: "Esta aplicación interactiva diseñóse puramente con fines educativos, dexando realizar pruebes de conceutu y simulaciones funcionales. El so oxetivu ye ayudar a estudiantes, desarrolladores y alministradores de sistemes a comprender el fluxu de validación y la lóxica d'integración de ferramientas de software n'entornos controlaos d'aprendizaxe y desarrollu.",
+			licListTitle: "🏷 Tipos de llicencia disponibles",
+			licListDesc: "Fai clic en cualquier fila pa seleicionala o desmarcala:",
+			licenses: [
+				{ code: "Single User License", label: "1 PC" },
+				{ code: "Multi User Volume Licenses", label: "2–999 PCs" },
+				{ code: "License for 1000 PCs or more", label: "1000+ PCs" },
+				{ code: "Local Site License", label: "Local Site" },
+				{ code: "Worldwide Unlimited Corporate License", label: "Global Corporate" },
+				{ code: "Academic / Educational License", label: "Academic" }
+			]
+		},
+		an: {
+            systemLabel: "Sistema",
+			navTitle: "🛠️ Panel de Control de WinRAR",
+			heroTitle: "Chenerador de Claus de WinRAR",
+			heroTag: "⚡ Ferramienta de licencias",
+			heroP: "Chenera, copia o alza o tuyo fichero <code>rarreg.key</code> en segundos.",
+			metaJs: "Nomás JavaScript · sin servidor",
+			metaUsage: "🔒 Nomás uso personal",
+			genTitle: "🔐 Chenerador de Licencia",
+			reset: "Limpiar",
+			labelUser: "Nombre de Rechistro",
+			hintUser: "Nomás letras, números, guión y espacio · Sin tildes ni caracters especials",
+			placeholderUser: "Ex: John Smith",
+			labelLic: "Tipo de Licencia",
+			hintLic: "Fai clic en qualsiquier tipo de la lista d'abaixo pa seleccionar-lo o desmarcar-lo",
+			placeholderLic: "Ex: Single User License",
+			btnGen: "⚡ Chenerar Licencia",
+			btnGenLoading: "Procesando...",
+			btnSave: "💾 Alzar rarreg.key",
+			labelKey: "Licencia Chenerada",
+			placeholderKey: "La licencia chenerada amaneixerá aquí dimpués de pulsar ⚡ Chenerar…",
+			btnCopy: "Copiar",
+			btnCopied: "¡Copiato!",
+			statusCopied: "¡Conteniu copiato con exito!",
+			stepsTitle: "📋 Pasos pa activar",
+			steps: [
+				"Plena os dos campos d'alto",
+				"Pulsa <strong>⚡ Chenerar</strong> y espera un inte",
+				"Pulsa <strong>💾 Alzar</strong> y descarga o fichero",
+				"Asegura-te que o nombre siga exactament <code>rarreg.key</code>",
+				"Copia o fichero en a carpeta d'instalación de WinRAR",
+				"Reinicia WinRAR pa aplicar os cambios"
+			],
+			reqTitle: "⚠ Requisitos d'o fichero",
+			reqs: [
+				"Alzar preferiblement con codificación <strong>ANSI</strong>",
+				"Usar nomás caracters <strong>ASCII</strong> (sin tildes ni caracters especials)",
+				"No editar o conteniu interno d'o fichero key",
+				"O fichero demana clamar-se estrictament <code>rarreg.key</code>"
+			],
+			aboutTitle: "📖 ¿Qué ye WinRAR?",
+			aboutP1: "<strong>WinRAR</strong> ye una d'as ferramientas de compresión y descompresión de datos más potents y emplegatas d'o mundo, desenvuelta por Eugene Roshal. Permite chestionar ficheros en formatos RAR, ZIP y muitos otros de traza rapida y eficient, optimizando o espacio d'almagazenamiento y facilitando o ninvío de ficheros grans. Pa un uso profesional, comercial y de tot lechitimo, recuerde adquirir una licencia oficial en o suyo sitio web autorizato.",
+			aboutP2: "Ista aplicación interactiva s'ha disenyato nomás con fins educativas, permitiendo fer prebas de concepto y simulacions funcionals. O suyo obchectivo ye aduyar a estudiants, desenvolupadors y administradors de sistemas a comprender o fluxo de validación y a lochica d'integración de ferramientas de software en arredols controlatos d'aprendizache y desenvolupamiento.",
+			licListTitle: "🏷 Tipos de licencia disponibles",
+			licListDesc: "Fai clic en qualsiquier ringlera pa seleccionar-la o desmarcar-la:",
 			licenses: [
 				{ code: "Single User License", label: "1 PC" },
 				{ code: "Multi User Volume Licenses", label: "2–999 PCs" },
