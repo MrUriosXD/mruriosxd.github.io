@@ -29,6 +29,11 @@
             --shadow-device: 0 30px 60px -15px rgba(0, 0, 0, 0.8);
             --focus-ring: 0 0 0 3px rgba(88, 166, 255, 0.3);
             --line-active-bg: rgba(88, 166, 255, 0.1);
+
+            /* Scrollbar Variables - Dark Theme */
+            --sb-track: #161b22;
+            --sb-thumb: #30363d;
+            --sb-thumb-hover: #8b949e;
         }
 
         html.light-theme {
@@ -55,16 +60,39 @@
             --shadow-device: 0 30px 60px -15px rgba(0, 105, 218, 0.15);
             --focus-ring: 0 0 0 3px rgba(0, 105, 218, 0.3);
             --line-active-bg: rgba(0, 105, 218, 0.08);
+
+            /* Scrollbar Variables - Light Theme */
+            --sb-track: #f6f8fa;
+            --sb-thumb: #d0d7de;
+            --sb-thumb-hover: #57606a;
         }
 
-        body, header, .panel, .panel-header, button, label.btn-action, textarea, .line-numbers, .preview-area, .badge, .status-bar, .custom-options {
-            transition: background-color 0.2s ease, 
-                        border-color 0.2s ease, 
-                        color 0.2s ease,
-                        box-shadow 0.2s ease;
+        /* --- MEJORA GLOBAL DE SCROLLBARS --- */
+        /* Para navegadores basados en Chromium (Chrome, Edge, Safari, Opera) */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--sb-track);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--sb-thumb);
+            border-radius: 6px;
+            border: 2px solid var(--sb-track); /* Da un efecto de espaciado elegante */
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--sb-thumb-hover);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        /* Para Firefox */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scrollbar-width: thin;
+            scrollbar-color: var(--sb-thumb) var(--sb-track);
+        }
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -135,7 +163,7 @@
         
         .custom-options {
             position: absolute; top: calc(100% + 4px); right: 0; background-color: var(--bg-panel); border: 1px solid var(--border-color);
-            border-radius: 6px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); list-style: none; padding: 4px 0; margin: 0; width: 150px;
+            border-radius: 6px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); list-style: none; padding: 4px 0; margin: 0; width: 180px; /* Incrementado ligeramente para albergar textos largos cómodamente */
             max-height: 300px; overflow-y: auto; z-index: 1000; display: none;
         }
         .custom-options.show { display: block; }
@@ -144,8 +172,8 @@
         .custom-option:hover { background-color: var(--btn-hover); }
         .custom-option.selected { background-color: var(--btn-active); color: var(--primary-color); font-weight: 500; }
         
-        .flag-icon { width: 18px; height: auto; max-height: 14px; border-radius: 2px; }
-        .system-icon { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .flag-icon { width: 18px; height: auto; max-height: 14px; border-radius: 2px; flex-shrink: 0; }
+        .system-icon { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
 
         .main-container { display: flex; flex: 1; height: calc(100vh - 84px); position: relative; }
         .panel { display: flex; flex-direction: column; background-color: var(--bg-panel); overflow: hidden; min-width: 200px; position: relative; }
@@ -234,11 +262,19 @@
         .inline-panel-btn.btn-danger-hover:hover { color: var(--danger-color); }
 
         @media (max-width: 900px) {
-            header span { display: none; } 
+            /* SE LIMITA EL DISPLAY NONE: Solo se ocultan los textos de botones directos del header, no los selectores */
+            header > .btn-group button span, 
+            header > button span { 
+                display: none; 
+            } 
             #auto-text { display: none; }
             #theme-text { display: none; }
-            /* CORRECCIÓN INTERFAZ MÓVIL: Se fuerza la visibilidad de los elementos del idioma */
-            .select-trigger .opt-text { display: inline-block !important; }
+            
+            /* CORRECCIÓN INTERFAZ MÓVIL: Se fuerza la visibilidad tanto del trigger como de la lista de opciones */
+            .select-trigger .opt-text,
+            .custom-options .opt-text { 
+                display: inline-block !important; 
+            }
             .select-trigger .arrow { display: inline-block !important; }
             .select-trigger { min-width: auto; padding: 6px 8px; }
             
