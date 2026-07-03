@@ -237,7 +237,9 @@
             header span { display: none; } 
             #auto-text { display: none; }
             #theme-text { display: none; }
-            .select-trigger .opt-text, .select-trigger .arrow { display: none; }
+            /* CORRECCIÓN INTERFAZ MÓVIL: Se fuerza la visibilidad de los elementos del idioma */
+            .select-trigger .opt-text { display: inline-block !important; }
+            .select-trigger .arrow { display: inline-block !important; }
             .select-trigger { min-width: auto; padding: 6px 8px; }
             
             .main-container { flex-direction: column; height: calc(100vh - 84px); }
@@ -258,6 +260,16 @@
     </style>
 </head>
 <body>
+    <!-- CORRECCIÓN DE RECARGA (ANTI-FLICKER): Verifica el tema de forma síncrona antes de pintar el DOM -->
+    <script>
+        (function () {
+            const savedTheme = localStorage.getItem('ide_theme');
+            const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+            if (savedTheme === 'light' || (!savedTheme && prefersLight)) {
+                document.documentElement.classList.add('light-theme');
+            }
+        })();
+    </script>
 
     <header id="main-header">
         <div class="btn-group">
@@ -318,63 +330,63 @@
                         <svg class="system-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
                         <span class="opt-text">System</span>
                     </li>
-                    <li data-value="es" class="custom-option">
+                    <li data-value="es" class="custom-option" id="opt-es">
                         <svg class="flag-icon" viewBox="0 0 750 500"><rect width="750" height="500" fill="#c60b1e"></rect><rect y="125" width="750" height="250" fill="#fbe122"></rect></svg>
                         <span class="opt-text">Español</span>
                     </li>
-                    <li data-value="ca" class="custom-option">
+                    <li data-value="ca" class="custom-option" id="opt-ca">
                         <svg class="flag-icon" viewBox="0 0 9 5"><rect width="9" height="5" fill="#fbe122"></rect><rect y="0.5" width="9" height="0.5" fill="#c60b1e"></rect><rect y="1.5" width="9" height="0.5" fill="#c60b1e"></rect><rect y="2.5" width="9" height="0.5" fill="#c60b1e"></rect><rect y="3.5" width="9" height="0.5" fill="#c60b1e"></rect></svg>
                         <span class="opt-text">Català</span>
                     </li>
-                    <li data-value="va" class="custom-option">
+                    <li data-value="va" class="custom-option" id="opt-va">
                         <svg class="flag-icon" viewBox="0 0 9 5"><rect width="9" height="5" fill="#fbe122"></rect><rect y="0.5" width="9" height="0.5" fill="#c60b1e"></rect><rect y="1.5" width="9" height="0.5" fill="#c60b1e"></rect><rect y="2.5" width="9" height="0.5" fill="#c60b1e"></rect><rect y="3.5" width="9" height="0.5" fill="#c60b1e"></rect><rect width="2" height="5" fill="#0047ab"></rect></svg>
                         <span class="opt-text">Valencià</span>
                     </li>
-                    <li data-value="gl" class="custom-option">
+                    <li data-value="gl" class="custom-option" id="opt-gl">
                         <svg class="flag-icon" viewBox="0 0 3 2"><rect width="3" height="2" fill="#fff"></rect><polygon points="0,2 3,0 3,0.4 0.6,2" fill="#6cabdd"></polygon></svg>
                         <span class="opt-text">Galego</span>
                     </li>
-                    <li data-value="eu" class="custom-option">
+                    <li data-value="eu" class="custom-option" id="opt-eu">
                         <svg class="flag-icon" viewBox="0 0 500 300"><rect width="500" height="300" fill="#2d6a4f"></rect><polygon points="0,0 500,300 500,300 0,0" stroke="#fff" stroke-width="40"></polygon><polygon points="500,0 0,300 0,300 500,0" stroke="#fff" stroke-width="40"></polygon><line x1="250" y1="0" x2="250" y2="300" stroke="#c60b1e" stroke-width="40"></line><line x1="0" y1="150" x2="500" y2="150" stroke="#c60b1e" stroke-width="40"></line></svg>
                         <span class="opt-text">Euskara</span>
                     </li>
-                    <li data-value="ast" class="custom-option">
+                    <li data-value="ast" class="custom-option" id="opt-ast">
                         <svg class="flag-icon" viewBox="0 0 3 2"><rect width="3" height="2" fill="#6cabdd"></rect><polygon points="1.5,0.4 1.7,0.9 2.2,0.9 1.8,1.2 2,1.7 1.5,1.4 1,1.7 1.2,1.2 0.8,0.9 1.3,0.9" fill="#fbe122"></polygon><line x1="1.5" y1="0" x2="1.5" y2="2" stroke="#fbe122" stroke-width="0.15"></line><line x1="0" y1="1" x2="3" y2="1" stroke="#fbe122" stroke-width="0.15"></line></svg>
                         <span class="opt-text">Asturianu</span>
                     </li>
-                    <li data-value="an" class="custom-option">
+                    <li data-value="an" class="custom-option" id="opt-an">
                         <svg class="flag-icon" viewBox="0 0 3 2"><rect width="3" height="2" fill="#fbe122"></rect><line x1="0.6" y1="0" x2="0.6" y2="2" stroke="#c60b1e" stroke-width="0.2"></line><line x1="1.2" y1="0" x2="1.2" y2="2" stroke="#c60b1e" stroke-width="0.2"></line><line x1="1.8" y1="0" x2="1.8" y2="2" stroke="#c60b1e" stroke-width="0.2"></line><line x1="2.4" y1="0" x2="2.4" y2="2" stroke="#c60b1e" stroke-width="0.2"></line></svg>
                         <span class="opt-text">Aragonés</span>
                     </li>
-                    <li data-value="en" class="custom-option">
+                    <li data-value="en" class="custom-option" id="opt-en">
                         <svg class="flag-icon" viewBox="0 0 60 30"><rect width="60" height="30" fill="#00247d"></rect><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"></path><path d="M0,0 L60,30 M60,0 L0,30" stroke="#cf142b" stroke-width="4"></path><path d="M30,0 L30,30 M0,15 L60,15" stroke="#fff" stroke-width="10"></path><path d="M30,0 L30,30 M0,15 L60,15" stroke="#cf142b" stroke-width="6"></path></svg>
                         <span class="opt-text">English</span>
                     </li>
-                    <li data-value="fr" class="custom-option">
+                    <li data-value="fr" class="custom-option" id="opt-fr">
                         <svg class="flag-icon" viewBox="0 0 3 2"><rect width="1" height="2" fill="#002395"></rect><rect x="1" width="1" height="2" fill="#fff"></rect><rect x="2" width="1" height="2" fill="#ed2939"></rect></svg>
                         <span class="opt-text">Français</span>
                     </li>
-                    <li data-value="de" class="custom-option">
+                    <li data-value="de" class="custom-option" id="opt-de">
                         <svg class="flag-icon" viewBox="0 0 5 3"><rect width="5" height="3" fill="#000"></rect><rect y="1" width="5" height="2" fill="#dd0000"></rect><rect y="2" width="5" height="1" fill="#ffce00"></rect></svg>
                         <span class="opt-text">Deutsch</span>
                     </li>
-                    <li data-value="it" class="custom-option">
+                    <li data-value="it" class="custom-option" id="opt-it">
                         <svg class="flag-icon" viewBox="0 0 3 2"><rect width="1" height="2" fill="#009246"></rect><rect x="1" width="1" height="2" fill="#fff"></rect><rect x="2" width="1" height="2" fill="#ce2b37"></rect></svg>
                         <span class="opt-text">Italiano</span>
                     </li>
-                    <li data-value="pt" class="custom-option">
+                    <li data-value="pt" class="custom-option" id="opt-pt">
                         <svg class="flag-icon" viewBox="0 0 3 2"><rect width="1.2" height="2" fill="#006600"></rect><rect x="1.2" width="1.8" height="2" fill="#ff0000"></rect></svg>
                         <span class="opt-text">Português</span>
                     </li>
-                    <li data-value="ru" class="custom-option">
+                    <li data-value="ru" class="custom-option" id="opt-ru">
                         <svg class="flag-icon" viewBox="0 0 3 2"><rect width="3" height="2" fill="#fff"></rect><rect y="0.66" width="3" height="1.34" fill="#0039a6"></rect><rect y="1.33" width="3" height="0.67" fill="#d52b1e"></rect></svg>
                         <span class="opt-text">Русский</span>
                     </li>
-                    <li data-value="zh" class="custom-option">
+                    <li data-value="zh" class="custom-option" id="opt-zh">
                         <svg class="flag-icon" viewBox="0 0 30 20"><rect width="30" height="20" fill="#de2910"></rect><polygon points="3,2 4,5 1.5,3 4.5,3 2,5" fill="#ffde00"></polygon></svg>
                         <span class="opt-text">简体中文</span>
                     </li>
-                    <li data-value="ja" class="custom-option">
+                    <li data-value="ja" class="custom-option" id="opt-ja">
                         <svg class="flag-icon" viewBox="0 0 3 2"><rect width="3" height="2" fill="#fff"></rect><circle cx="1.5" cy="1" r="0.6" fill="#bc002d"></circle></svg>
                         <span class="opt-text">日本語</span>
                     </li>
@@ -528,7 +540,7 @@
             gl: { 
                 btn_run: "Executar", btn_auto: "Auto", btn_desktop: "Escritorio", btn_tablet: "Tableta", btn_mobile: "Móbil", theme_dark: "Noite", theme_light: "Día", panel_source: "Código Fonte", badge_saved: "Gardado", badge_modifying: "Modificando...", search_next: "Seguinte", search_replace: "Cambiar", search_all: "Todo", panel_preview: "Simulador de Contorno", sb_ready: "Estudio Listo", chars: "caracteres", lines: "Liñas", sb_tab_size: "Tamaño Tabulación",
                 ttl_run: "Executar Código (Ctrl + Enter)", ttl_auto: "Renderizado Automático", ttl_undo: "Desfacer (Ctrl + Z)", ttl_redo: "Refacer (Ctrl + Y)", ttl_desktop: "Vista Escritorio", ttl_tablet: "Vista Tableta", ttl_mobile: "Vista Móbil", ttl_rotate: "Rotar Pantalla (Modo Apaisado)", ttl_theme: "Cambiar Tema Visual", ttl_format: "Formatar Estrutura HTML", ttl_search: "Buscar e Reemplazar (Ctrl + F)", ttl_copy: "Copiar ao Portapapeis", ttl_reset: "Restaurar Código de Exemplo", ttl_import: "Importar Ficheiro .html", ttl_export: "Exportar Documento HTML", ttl_clear: "Baleirar Editor", ttl_tab: "Abrir en Nova Pestana", ttl_fullscreen: "Pantalla Completa Simulador",
-                toast_run: "Código executado manualmente.", toast_save: "Progreso gardado localmente.", toast_undo: "Desfeito", toast_redo: "Refeito", toast_copied: "Código copiado.", toast_export: "Documento exportado.", toast_import: "Arquivo importado.", toast_format: "Estrutura aliñada.", toast_format_err: "Fallo ao formatar.", toast_clear: "Editor baleirado.", toast_reset: "Exemplo cargado.", confirm_title: "Confirmar Acción?", confirm_clear_msg: "Queres baleirar completamente o editor?", confirm_reset_msg: "Queres restaurar o exemplo orixinal?", confirm_yes: "Aceptar", confirm_no: "Cancelar", view_fluida: "Escritorio Fluído" 
+                toast_run: "Código executao manualmente.", toast_save: "Progreso gardado localmente.", toast_undo: "Desfeito", toast_redo: "Refeito", toast_copied: "Código copiado.", toast_export: "Documento exportado.", toast_import: "Arquivo importado.", toast_format: "Estrutura aliñada.", toast_format_err: "Fallo ao formatar.", toast_clear: "Editor baleirado.", toast_reset: "Exemplo cargado.", confirm_title: "Confirmar Acción?", confirm_clear_msg: "Queres baleirar completamente o editor?", confirm_reset_msg: "Queres restaurar o exemplo orixinal?", confirm_yes: "Aceptar", confirm_no: "Cancelar", view_fluida: "Escritorio Fluído" 
             },
             eu: { 
                 btn_run: "Exekutatu", btn_auto: "Auto", btn_desktop: "Idazmahaia", btn_tablet: "Tableta", btn_mobile: "Mugikorra", theme_dark: "Gaua", theme_light: "Eguna", panel_source: "Iturburu-kodea", badge_saved: "GORDETA", badge_modifying: "ALDATZEN...", search_next: "Hurrengoa", search_replace: "Ordezkatu", search_all: "Denak", panel_preview: "Ingurune Simulagailua", sb_ready: "Estudioa Prest", chars: "karaktere", lines: "Lerroak", sb_tab_size: "Tabulazio Tamaina",
@@ -624,7 +636,6 @@
             const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
             
             if(savedTheme === 'light' || (!savedTheme && prefersLight)) {
-                document.documentElement.classList.add('light-theme');
                 themeIcon.innerHTML = moonSVG;
             } else {
                 themeIcon.innerHTML = sunSVG;
@@ -681,7 +692,14 @@
             
             const sysLangFull = navigator.language || navigator.userLanguage;
             const sysLang = sysLangFull.split('-')[0].toLowerCase();
-            let matchedLang = 'en';
+            
+            // Buscar si hay un idioma guardado en el localStorage
+            let savedLang = localStorage.getItem('ide_lang') || 'system';
+            let targetLang = savedLang;
+
+            if (savedLang === 'system') {
+                targetLang = sysLang;
+            }
 
             trigger.addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -709,6 +727,9 @@
                     optionsList.classList.remove('show');
                     container.classList.remove('open');
                     
+                    // Guardar la elección del usuario en localStorage
+                    localStorage.setItem('ide_lang', value);
+                    
                     if (value === 'system') {
                         applyTranslations(sysLang);
                     } else {
@@ -716,15 +737,17 @@
                     }
                     showToast(translations[currentLang]['sb_ready']);
                 });
-
-                if (opt.getAttribute('data-value') === sysLang) {
-                    matchedLang = sysLang;
-                }
             });
 
-            applyTranslations(matchedLang);
-            const sysOpt = document.getElementById('opt-system');
-            triggerContent.innerHTML = sysOpt.querySelector('svg').outerHTML + sysOpt.querySelector('.opt-text').outerHTML;
+            // Establecer visualmente el elemento seleccionado guardado por defecto
+            options.forEach(o => o.classList.remove('selected'));
+            const activeOption = document.getElementById(`opt-${savedLang}`) || document.getElementById('opt-system');
+            if (activeOption) {
+                activeOption.classList.add('selected');
+                triggerContent.innerHTML = activeOption.querySelector('svg').outerHTML + activeOption.querySelector('.opt-text').outerHTML;
+            }
+
+            applyTranslations(targetLang);
         }
 
         function initKeyboardShortcuts() {
