@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WP LocoTranslator & POT Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        wp: {
+                            blue: '#0073aa',
+                            darkblue: '#005177',
+                            light: '#f0f6fc',
+                            dark: '#1d2327'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .dark ::-webkit-scrollbar-track {
+            background: #1d2327;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #4a5568;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-zinc-900 dark:text-zinc-100 min-h-full flex flex-col font-sans transition-colors duration-200">
+
+    <header class="bg-white dark:bg-zinc-800 border-b border-slate-200 dark:border-zinc-700 sticky top-0 z-30 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="bg-wp-blue text-white p-2 rounded-lg flex items-center justify-center">
+                    <i class="fa-brands fa-wordpress text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold tracking-tight">WP Localization Suite</h1>
+                    <p class="text-xs text-slate-500 dark:text-zinc-400">Traductor offline y extractor .POT en tu navegador</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-1 bg-slate-100 dark:bg-zinc-700 p-1 rounded-xl">
+                <button id="tabBtnTranslate" class="px-4 py-2 text-xs font-bold rounded-lg transition-all bg-white dark:bg-zinc-600 shadow-sm text-wp-blue dark:text-white flex items-center gap-2">
+                    <i class="fa-solid fa-language"></i> Traductor .PO
+                </button>
+                <button id="tabBtnExtractor" class="px-4 py-2 text-xs font-bold rounded-lg transition-all text-slate-600 dark:text-zinc-300 hover:bg-white/50 dark:hover:bg-zinc-600/50 flex items-center gap-2">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Generador .POT
+                </button>
+            </div>
+
+            <div class="flex items-center space-x-4">
+                <button id="themeToggle" class="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-zinc-700 dark:hover:bg-zinc-600 transition-colors text-slate-600 dark:text-zinc-200" title="Cambiar tema">
+                    <i class="fa-solid fa-moon dark:hidden"></i>
+                    <i class="fa-solid fa-sun hidden dark:inline"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main id="viewTranslate" class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col lg:flex-row gap-6">
+        
+        <aside class="w-full lg:w-80 flex-shrink-0 space-y-6">
+            <div class="bg-white dark:bg-zinc-800 rounded-xl p-5 border border-slate-200 dark:border-zinc-700 shadow-sm space-y-5">
+                <h2 class="font-semibold text-base border-b border-slate-100 dark:border-zinc-700 pb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-gears text-wp-blue"></i> Configuración
+                </h2>
+
+                <div class="space-y-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider mb-1">Origen</label>
+                        <select id="langSource" class="w-full rounded-lg border border-slate-300 dark:border-zinc-600 bg-white dark:bg-zinc-700 p-2.5 text-sm focus:ring-2 focus:ring-wp-blue outline-none">
+                            <option value="en">Inglés (en)</option>
+                            <option value="auto">Detectar automáticamente</option>
+                            <option value="es">Español (es)</option>
+                            <option value="fr">Francés (fr)</option>
+                            <option value="de">Alemán (de)</option>
+                            <option value="it">Italiano (it)</option>
+                            <option value="pt">Portugués (pt)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider mb-1">Destino</label>
+                        <select id="langTarget" class="w-full rounded-lg border border-slate-300 dark:border-zinc-600 bg-white dark:bg-zinc-700 p-2.5 text-sm focus:ring-2 focus:ring-wp-blue outline-none">
+                            <option value="es" selected>Español (es)</option>
+                            <option value="en">Inglés (en)</option>
+                            <option value="fr">Francés (fr)</option>
+                            <option value="de">Alemán (de)</option>
+                            <option value="it">Italiano (it)</option>
+                            <option value="pt">Portugués (pt)</option>
+                            <option value="ca">Catalán (ca)</option>
+                            <option value="gl">Gallego (gl)</option>
+                            <option value="ast">Asturiano (ast)</option>
+                            <option value="co">Andaluz (andaluz)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="space-y-3 pt-3 border-t border-slate-100 dark:border-zinc-700">
+                    <label class="block text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider mb-1">Motor de traducción</label>
+                    <select id="translateEngine" class="w-full rounded-lg border border-slate-300 dark:border-zinc-600 bg-white dark:bg-zinc-700 p-2.5 text-sm focus:ring-2 focus:ring-wp-blue outline-none">
+                        <option value="google_free">Google Translate (Gratuito)</option>
+                        <option value="deepl">DeepL API (Requiere Key)</option>
+                        <option value="openai">OpenAI GPT (Requiere Key)</option>
+                    </select>
+
+                    <div id="apiKeyContainer" class="hidden">
+                        <label class="block text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider mb-1">API Key / Token</label>
+                        <input type="password" id="apiKey" placeholder="Introduce tu API Key..." class="w-full rounded-lg border border-slate-300 dark:border-zinc-600 bg-white dark:bg-zinc-700 p-2.5 text-sm focus:ring-2 focus:ring-wp-blue outline-none">
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between items-center mb-1">
+                            <label class="block text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">Retraso (Delay)</label>
+                            <span id="delayVal" class="text-xs font-bold text-wp-blue">1200 ms</span>
+                        </div>
+                        <input type="range" id="delayMs" min="200" max="5000" step="100" value="1200" class="w-full h-2 bg-slate-200 dark:bg-zinc-700 rounded-lg appearance-none cursor-pointer accent-wp-blue">
+                        <span class="text-[10px] text-slate-400 block mt-1">Valores altos evitan bloqueos de IP (Rate Limiting).</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="fileStatsBox" class="hidden bg-white dark:bg-zinc-800 rounded-xl p-5 border border-slate-200 dark:border-zinc-700 shadow-sm space-y-4">
+                <h3 class="font-semibold text-sm border-b border-slate-100 dark:border-zinc-700 pb-2">Resumen del Archivo</h3>
+                <div class="grid grid-cols-2 gap-2 text-xs">
+                    <div class="bg-slate-50 dark:bg-zinc-700/50 p-2 rounded">
+                        <p class="text-slate-400">Total cadenas</p>
+                        <p id="statTotal" class="text-lg font-bold">0</p>
+                    </div>
+                    <div class="bg-emerald-50 dark:bg-emerald-950/20 p-2 rounded">
+                        <p class="text-emerald-600 dark:text-emerald-400">Traducidas</p>
+                        <p id="statTranslated" class="text-lg font-bold text-emerald-600 dark:text-emerald-400">0</p>
+                    </div>
+                    <div class="bg-amber-50 dark:bg-amber-950/20 p-2 rounded">
+                        <p class="text-amber-600 dark:text-amber-400">Pendientes</p>
+                        <p id="statPending" class="text-lg font-bold text-amber-600 dark:text-amber-400">0</p>
+                    </div>
+                    <div class="bg-indigo-50 dark:bg-indigo-950/20 p-2 rounded">
+                        <p class="text-indigo-600 dark:text-indigo-400">Fuzzy / Vacías</p>
+                        <p id="statFuzzy" class="text-lg font-bold text-indigo-600 dark:text-indigo-400">0</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <section class="flex-1 flex flex-col min-w-0 space-y-6">
+            
+            <div id="dropZone" class="border-2 border-dashed border-slate-300 dark:border-zinc-700 hover:border-wp-blue dark:hover:border-wp-blue bg-white dark:bg-zinc-800/50 rounded-2xl p-10 flex flex-col items-center justify-center text-center cursor-pointer transition-all shadow-sm">
+                <input type="file" id="fileInput" accept=".po,.pot" class="hidden">
+                <div class="bg-wp-blue/10 text-wp-blue w-16 h-16 rounded-full flex items-center justify-center mb-4 transition-transform hover:scale-110">
+                    <i class="fa-solid fa-file-import text-3xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold mb-1">Arrastra tu archivo .PO o .POT aquí</h3>
+                <p class="text-sm text-slate-500 dark:text-zinc-400 mb-4 max-w-sm">O si lo prefieres, haz clic para explorar en tu ordenador</p>
+                <div class="flex gap-2">
+                    <span class="text-xs bg-slate-100 dark:bg-zinc-700 px-3 py-1.5 rounded-md font-mono">ejemplo.po</span>
+                    <span class="text-xs bg-slate-100 dark:bg-zinc-700 px-3 py-1.5 rounded-md font-mono">ejemplo.pot</span>
+                </div>
+            </div>
+
+            <div id="workspace" class="hidden flex-1 flex flex-col space-y-4">
+                
+                <div class="bg-white dark:bg-zinc-800 rounded-xl p-4 border border-slate-200 dark:border-zinc-700 shadow-sm space-y-4">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                        <div class="flex-1 w-full">
+                            <div class="flex justify-between items-center mb-1 text-xs font-semibold">
+                                <span class="text-slate-500 dark:text-zinc-400">Progreso de la traducción automática</span>
+                                <span id="progressText" class="text-wp-blue">0% (0/0)</span>
+                            </div>
+                            <div class="w-full bg-slate-100 dark:bg-zinc-700 h-3 rounded-full overflow-hidden">
+                                <div id="progressBar" class="bg-wp-blue h-full transition-all duration-300 w-0"></div>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 w-full sm:w-auto justify-end">
+                            <button id="btnAutoTranslate" class="bg-wp-blue hover:bg-wp-darkblue text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors flex items-center gap-2">
+                                <i class="fa-solid fa-robot"></i> Traducir Todo
+                            </button>
+                            <button id="btnStop" class="hidden bg-rose-600 hover:bg-rose-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors flex items-center gap-2">
+                                <i class="fa-solid fa-circle-stop"></i> Detener
+                            </button>
+                            <button id="btnClear" class="bg-slate-100 hover:bg-slate-200 dark:bg-zinc-700 dark:hover:bg-zinc-600 px-4 py-2 rounded-lg text-sm font-semibold transition-colors flex items-center gap-2">
+                                <i class="fa-solid fa-trash-can"></i> Limpiar
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row gap-3 pt-3 border-t border-slate-100 dark:border-zinc-700">
+                        <div class="relative flex-1">
+                            <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                            <input type="text" id="searchInput" placeholder="Buscar por msgid o msgstr..." class="w-full rounded-lg border border-slate-300 dark:border-zinc-600 bg-white dark:bg-zinc-700 pl-9 pr-4 py-2 text-sm focus:ring-2 focus:ring-wp-blue outline-none">
+                        </div>
+                        <div class="flex gap-2">
+                            <button data-filter="all" class="filter-btn active bg-wp-blue text-white px-3.5 py-1.5 rounded-lg text-xs font-semibold">Todas</button>
+                            <button data-filter="pending" class="filter-btn bg-slate-100 hover:bg-slate-200 dark:bg-zinc-700 dark:hover:bg-zinc-600 text-slate-600 dark:text-zinc-300 px-3.5 py-1.5 rounded-lg text-xs font-semibold">Pendientes</button>
+                            <button data-filter="translated" class="filter-btn bg-slate-100 hover:bg-slate-200 dark:bg-zinc-700 dark:hover:bg-zinc-600 text-slate-600 dark:text-zinc-300 px-3.5 py-1.5 rounded-lg text-xs font-semibold">Traducidas</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-zinc-800 rounded-xl border border-slate-200 dark:border-zinc-700 shadow-sm overflow-hidden flex-1 flex flex-col">
+                    <div class="overflow-x-auto overflow-y-auto max-h-[500px] flex-1">
+                        <table class="w-full text-left border-collapse min-w-[600px]">
+                            <thead class="bg-slate-50 dark:bg-zinc-800/50 border-b border-slate-200 dark:border-zinc-700 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400 sticky top-0 z-10">
+                                <tr>
+                                    <th class="py-3.5 px-4 w-12">#</th>
+                                    <th class="py-3.5 px-4 w-1/2">Origen (msgid)</th>
+                                    <th class="py-3.5 px-4 w-1/2">Traducción (msgstr)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="translationTableBody" class="divide-y divide-slate-100 dark:divide-zinc-700 text-sm">
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <main id="viewExtractor" class="hidden flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col lg:flex-row gap-6">
+        
+        <aside class="w-full lg:w-80 flex-shrink-0 space-y-6">
+            <div class="bg-white dark:bg-zinc-800 rounded-xl p-5 border border-slate-200 dark:border-zinc-700 shadow-sm space-y-5">
+                <h2 class="font-semibold text-base border-b border-slate-100 dark:border-zinc-700 pb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-filter text-wp-blue"></i> Filtro Escáner
+                </h2>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider mb-1">Text Domain a buscar</label>
+                    <input type="text" id="textDomainInput" placeholder="Ej. mi-plugin-o-tema" class="w-full rounded-lg border border-slate-300 dark:border-zinc-600 bg-white dark:bg-zinc-700 p-2.5 text-sm focus:ring-2 focus:ring-wp-blue outline-none font-mono">
+                    <p class="text-[10px] text-slate-400 mt-1">Se extraerán preferentemente las cadenas que coincidan con este dominio. Déjalo vacío para extraer todas las detectadas.</p>
+                </div>
+            </div>
+
+            <div id="scannerStatsBox" class="hidden bg-white dark:bg-zinc-800 rounded-xl p-5 border border-slate-200 dark:border-zinc-700 shadow-sm space-y-4">
+                <h3 class="font-semibold text-sm border-b border-slate-100 dark:border-zinc-700 pb-2 font-sans">Estadísticas de Extracción</h3>
+                <div class="grid grid-cols-2 gap-2 text-xs">
+                    <div class="bg-slate-50 dark:bg-zinc-700/50 p-2 rounded">
+                        <p class="text-slate-400">Archivos PHP</p>
+                        <p id="statScannedFiles" class="text-lg font-bold">0</p>
+                    </div>
+                    <div class="bg-wp-blue/10 p-2 rounded">
+                        <p class="text-wp-blue">Cadenas Únicas</p>
+                        <p id="statUniqueStrings" class="text-lg font-bold text-wp-blue">0</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <section class="flex-1 flex flex-col min-w-0 space-y-6">
+            <div id="dropZonePHP" class="border-2 border-dashed border-slate-300 dark:border-zinc-700 hover:border-wp-blue dark:hover:border-wp-blue bg-white dark:bg-zinc-800/50 rounded-2xl p-12 flex flex-col items-center justify-center text-center cursor-pointer transition-all shadow-sm">
+                <input type="file" id="fileInputPHP" accept=".php" multiple class="hidden">
+                <input type="file" id="folderInputPHP" webkitdirectory directory multiple class="hidden">
+                
+                <div class="bg-wp-blue/10 text-wp-blue w-16 h-16 rounded-full flex items-center justify-center mb-4 transition-transform hover:scale-110">
+                    <i class="fa-solid fa-folder-open text-3xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold mb-1">Arrastra tus archivos o la carpeta de tu Plugin / Tema</h3>
+                <p class="text-sm text-slate-500 dark:text-zinc-400 mb-4 max-w-md">Analizaremos recursivamente todos los archivos .php para extraer las funciones de traducción de WordPress.</p>
+                
+                <div class="flex gap-3">
+                    <button id="btnSelectFilesPHP" class="bg-slate-200 hover:bg-slate-300 dark:bg-zinc-700 dark:hover:bg-zinc-600 text-slate-800 dark:text-white px-4 py-2 rounded-lg text-xs font-bold transition-all">
+                        Seleccionar Archivos PHP
+                    </button>
+                    <button id="btnSelectFolderPHP" class="bg-wp-blue hover:bg-wp-darkblue text-white px-4 py-2 rounded-lg text-xs font-bold transition-all">
+                        Seleccionar Carpeta Completa
+                    </button>
+                </div>
+            </div>
+
+            <div id="scannerWorkspace" class="hidden flex-1 flex flex-col space-y-4">
+                <div class="bg-white dark:bg-zinc-800 rounded-xl p-4 border border-slate-200 dark:border-zinc-700 shadow-sm flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <div>
+                        <h3 class="font-bold text-sm">Cadenas extraídas de tu código fuente</h3>
+                        <p class="text-xs text-slate-500 dark:text-zinc-400">Verifica la lista de cadenas de localización recopiladas de los ficheros procesados.</p>
+                    </div>
+                    <div class="flex gap-2 w-full sm:w-auto justify-end">
+                        <button id="btnLoadToTranslator" class="bg-wp-blue hover:bg-wp-darkblue text-white px-4 py-2.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-arrow-right-to-bracket"></i> Cargar en el Traductor
+                        </button>
+                        <button id="btnDownloadPOT" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-file-arrow-down"></i> Descargar plantilla .POT
+                        </button>
+                        <button id="btnResetScanner" class="bg-slate-100 hover:bg-slate-200 dark:bg-zinc-700 dark:hover:bg-zinc-600 px-4 py-2.5 rounded-lg text-xs font-bold transition-all">
+                            Limpiar Escáner
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-zinc-800 rounded-xl border border-slate-200 dark:border-zinc-700 shadow-sm overflow-hidden flex-1 flex flex-col">
+                    <div class="overflow-x-auto overflow-y-auto max-h-[500px] flex-1">
+                        <table class="w-full text-left border-collapse min-w-[600px]">
+                            <thead class="bg-slate-50 dark:bg-zinc-800/50 border-b border-slate-200 dark:border-zinc-700 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400 sticky top-0 z-10">
+                                <tr>
+                                    <th class="py-3.5 px-4 w-12">#</th>
+                                    <th class="py-3.5 px-4 w-[60%]">Texto Original (msgid)</th>
+                                    <th class="py-3.5 px-4 w-[40%]">Ubicación (Referencias)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="scannerTableBody" class="divide-y divide-slate-100 dark:divide-zinc-700 text-sm font-mono">
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="exportBar" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 shadow-2xl rounded-2xl px-6 py-4 z-40 flex items-center justify-between gap-6 max-w-2xl w-[90%]">
+        <div class="flex items-center gap-3">
+            <div class="bg-emerald-500/10 text-emerald-500 p-2.5 rounded-lg">
+                <i class="fa-solid fa-circle-check text-xl"></i>
+            </div>
+            <div>
+                <p class="text-sm font-semibold">Listo para WordPress</p>
+                <p class="text-xs text-slate-500 dark:text-zinc-400">Descarga los ficheros e instálalos directamente</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-2">
+            <button id="btnExportPO" class="bg-slate-800 hover:bg-black dark:bg-zinc-700 dark:hover:bg-zinc-600 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2">
+                <i class="fa-solid fa-file-code"></i> Guardar .PO
+            </button>
+            <button id="btnExportMO" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2">
+                <i class="fa-solid fa-cube"></i> Guardar .MO (Binario)
+            </button>
+        </div>
+    </div>
+
+    <div id="toast" class="fixed bottom-6 right-6 bg-slate-900 text-white dark:bg-white dark:text-zinc-950 px-4 py-3 rounded-lg shadow-xl text-xs font-semibold translate-y-20 opacity-0 transition-all duration-300 pointer-events-none z-50 flex items-center gap-2">
+        <i class="fa-solid fa-info-circle"></i> <span id="toastMsg">Mensaje de notificación</span>
+    </div>
+
+    <script>
+        // --- CONSTANTES Y ESTADO GENERAL ---
+        let translationEntries = []; // Fichero cargado en el Traductor
+        let extractedStrings = {};   // Cadenas PHP extraídas: { "texto": { files: Set() } }
+        let rawHeaders = "";
+        let isTranslating = false;
+        let originalFileName = "locale";
+
+        // --- MANEJO DE PESTAÑAS (TABS) ---
+        const tabBtnTranslate = document.getElementById('tabBtnTranslate');
+        const tabBtnExtractor = document.getElementById('tabBtnExtractor');
+        const viewTranslate = document.getElementById('viewTranslate');
+        const viewExtractor = document.getElementById('viewExtractor');
+        const exportBar = document.getElementById('exportBar');
+
+        function switchTab(tab) {
+            if (tab === 'translate') {
+                viewTranslate.classList.remove('hidden');
+                viewExtractor.classList.add('hidden');
+                
+                tabBtnTranslate.className = "px-4 py-2 text-xs font-bold rounded-lg transition-all bg-white dark:bg-zinc-600 shadow-sm text-wp-blue dark:text-white flex items-center gap-2";
+                tabBtnExtractor.className = "px-4 py-2 text-xs font-bold rounded-lg transition-all text-slate-600 dark:text-zinc-300 hover:bg-white/50 dark:hover:bg-zinc-600/50 flex items-center gap-2";
+                
+                // Mostrar barra de descarga si hay traducción en marcha
+                if (translationEntries.length > 0) {
+                    exportBar.classList.remove('hidden');
+                }
+            } else {
+                viewTranslate.classList.add('hidden');
+                viewExtractor.classList.remove('hidden');
+                
+                tabBtnExtractor.className = "px-4 py-2 text-xs font-bold rounded-lg transition-all bg-white dark:bg-zinc-600 shadow-sm text-wp-blue dark:text-white flex items-center gap-2";
+                tabBtnTranslate.className = "px-4 py-2 text-xs font-bold rounded-lg transition-all text-slate-600 dark:text-zinc-300 hover:bg-white/50 dark:hover:bg-zinc-600/50 flex items-center gap-2";
+                
+                // Ocultar barra de descarga de traducción mientras se está en el extractor
+                exportBar.classList.add('hidden');
+            }
+        }
+
+        tabBtnTranslate.addEventListener('click', () => switchTab('translate'));
+        tabBtnExtractor.addEventListener('click', () => switchTab('extractor'));
+
+        // --- SELECTORES DOM COMUNES ---
+        const themeToggle = document.getElementById('themeToggle');
+        
+        // --- SELECTORES VISTA 1 (TRADUCTOR) ---
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const workspace = document.getElementById('workspace');
+        const translationTableBody = document.getElementById('translationTableBody');
+        const fileStatsBox = document.getElementById('fileStatsBox');
+        
+        const statTotal = document.getElementById('statTotal');
+        const statTranslated = document.getElementById('statTranslated');
+        const statPending = document.getElementById('statPending');
+        const statFuzzy = document.getElementById('statFuzzy');
+        
+        const langSource = document.getElementById('langSource');
+        const langTarget = document.getElementById('langTarget');
+        const translateEngine = document.getElementById('translateEngine');
+        const apiKeyContainer = document.getElementById('apiKeyContainer');
+        const apiKey = document.getElementById('apiKey');
+        const delayMs = document.getElementById('delayMs');
+        const delayVal = document.getElementById('delayVal');
+        const searchInput = document.getElementById('searchInput');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+
+        const btnAutoTranslate = document.getElementById('btnAutoTranslate');
+        const btnStop = document.getElementById('btnStop');
+        const btnClear = document.getElementById('btnClear');
+        const btnExportPO = document.getElementById('btnExportPO');
+        const btnExportMO = document.getElementById('btnExportMO');
+
+        // --- SELECTORES VISTA 2 (EXTRACTOR PHP) ---
+        const dropZonePHP = document.getElementById('dropZonePHP');
+        const fileInputPHP = document.getElementById('fileInputPHP');
+        const folderInputPHP = document.getElementById('folderInputPHP');
+        const textDomainInput = document.getElementById('textDomainInput');
+        const scannerStatsBox = document.getElementById('scannerStatsBox');
+        const scannerWorkspace = document.getElementById('scannerWorkspace');
+        const scannerTableBody = document.getElementById('scannerTableBody');
+        
+        const btnSelectFilesPHP = document.getElementById('btnSelectFilesPHP');
+        const btnSelectFolderPHP = document.getElementById('btnSelectFolderPHP');
+        const btnLoadToTranslator = document.getElementById('btnLoadToTranslator');
+        const btnDownloadPOT = document.getElementById('btnDownloadPOT');
+        const btnResetScanner = document.getElementById('btnResetScanner');
+        
+        const statScannedFiles = document.getElementById('statScannedFiles');
+        const statUniqueStrings = document.getElementById('statUniqueStrings');
+
+        // --- SISTEMA DE NOTIFICACIONES (TOAST) ---
+        function showToast(message, duration = 3000) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = message;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, duration);
+        }
+
+        // --- MODO OSCURO ---
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.theme = 'light';
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.theme = 'dark';
+            }
+        });
+
+        // Toggle API Key Input
+        translateEngine.addEventListener('change', () => {
+            if (translateEngine.value !== 'google_free') {
+                apiKeyContainer.classList.remove('hidden');
+            } else {
+                apiKeyContainer.classList.add('hidden');
+            }
+        });
+
+        delayMs.addEventListener('input', (e) => {
+            delayVal.innerText = `${e.target.value} ms`;
+        });
+
+
+        // ==========================================
+        // VISTA 1: TRADUCTOR DE ARCHIVOS .PO/.POT
+        // ==========================================
+
+        dropZone.addEventListener('click', () => fileInput.click());
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('border-wp-blue', 'bg-wp-blue/5');
+        });
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('border-wp-blue', 'bg-wp-blue/5');
+        });
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('border-wp-blue', 'bg-wp-blue/5');
+            if (e.dataTransfer.files.length > 0) {
+                handleFile(e.dataTransfer.files[0]);
+            }
+        });
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFile(e.target.files[0]);
+            }
+        });
+
+        function handleFile(file) {
+            originalFileName = file.name.replace(/\.[^/.]+$/, "");
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                parsePOContent(e.target.result);
+                saveToLocalStorage();
+            };
+            reader.readAsText(file, "UTF-8");
+        }
+
+        function parsePOContent(content) {
+            translationEntries = [];
+            rawHeaders = "";
+            const lines = content.replace(/\r\n/g, '\n').split('\n');
+            let currentEntry = { index: 0, msgid: "", msgstr: "", msgctxt: "", comments: [] };
+            let currentField = null;
+            let entryIndex = 0;
+            let isInHeader = true;
+
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i].trim();
+
+                if (line === "") {
+                    if (currentEntry.msgid !== "") {
+                        if (isInHeader && currentEntry.msgid === "") {
+                            // Cabecera vacía ignorada del flujo de edición
+                        } else {
+                            currentEntry.index = entryIndex++;
+                            currentEntry.isTranslated = currentEntry.msgstr.trim() !== "";
+                            translationEntries.push(currentEntry);
+                        }
+                        currentEntry = { index: 0, msgid: "", msgstr: "", msgctxt: "", comments: [] };
+                        currentField = null;
+                    }
+                    continue;
+                }
+
+                if (line.startsWith('#')) {
+                    currentEntry.comments.push(line);
+                    if (isInHeader) {
+                        rawHeaders += line + "\n";
+                    }
+                    continue;
+                }
+
+                const ctxtMatch = line.match(/^msgctxt\s+"(.*)"$/);
+                const idMatch = line.match(/^msgid\s+"(.*)"$/);
+                const strMatch = line.match(/^msgstr\s+"(.*)"$/);
+
+                if (ctxtMatch) {
+                    currentField = 'msgctxt';
+                    currentEntry.msgctxt = ctxtMatch[1];
+                    isInHeader = false;
+                } else if (idMatch) {
+                    currentField = 'msgid';
+                    currentEntry.msgid = idMatch[1];
+                    isInHeader = false;
+                } else if (strMatch) {
+                    currentField = 'msgstr';
+                    currentEntry.msgstr = strMatch[1];
+                } else if (line.startsWith('"') && line.endsWith('"')) {
+                    const contentInside = line.slice(1, -1);
+                    if (currentField === 'msgid') {
+                        currentEntry.msgid += contentInside;
+                    } else if (currentField === 'msgstr') {
+                        currentEntry.msgstr += contentInside;
+                    } else if (currentField === 'msgctxt') {
+                        currentEntry.msgctxt += contentInside;
+                    }
+                }
+            }
+
+            if (currentEntry.msgid !== "") {
+                currentEntry.index = entryIndex++;
+                currentEntry.isTranslated = currentEntry.msgstr.trim() !== "";
+                translationEntries.push(currentEntry);
+            }
+
+            showToast("¡Archivo importado correctamente!");
+            dropZone.classList.add('hidden');
+            workspace.classList.remove('hidden');
+            fileStatsBox.classList.remove('hidden');
+            exportBar.classList.remove('hidden');
+            
+            updateStats();
+            renderTable();
+        }
+
+        function renderTable(filter = 'all', search = '') {
+            translationTableBody.innerHTML = '';
+            const filtered = translationEntries.filter(entry => {
+                const matchesFilter = 
+                    filter === 'all' ? true :
+                    filter === 'translated' ? entry.isTranslated :
+                    filter === 'pending' ? !entry.isTranslated : true;
+
+                const query = search.toLowerCase();
+                const matchesSearch = 
+                    entry.msgid.toLowerCase().includes(query) || 
+                    entry.msgstr.toLowerCase().includes(query);
+
+                return matchesFilter && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                translationTableBody.innerHTML = `
+                    <tr>
+                        <td colspan="3" class="py-10 text-center text-slate-400 dark:text-zinc-500">
+                            No se encontraron entradas de traducción.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            filtered.forEach(entry => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50/50 dark:hover:bg-zinc-800/30 transition-colors";
+                tr.setAttribute('data-index', entry.index);
+
+                const escapedMsgId = escapeHtml(entry.msgid);
+                const escapedContext = entry.msgctxt ? `<span class="bg-indigo-100 dark:bg-indigo-950/50 text-indigo-700 dark:text-indigo-300 text-[10px] px-1.5 py-0.5 rounded font-mono block mb-1">Contexto: ${escapeHtml(entry.msgctxt)}</span>` : '';
+
+                tr.innerHTML = `
+                    <td class="py-4 px-4 text-xs font-mono text-slate-400 dark:text-zinc-500 align-top">${entry.index + 1}</td>
+                    <td class="py-4 px-4 align-top w-1/2">
+                        ${escapedContext}
+                        <div class="whitespace-pre-wrap break-words font-sans text-slate-900 dark:text-zinc-100">${escapedMsgId}</div>
+                    </td>
+                    <td class="py-3 px-4 align-top w-1/2">
+                        <textarea class="w-full text-sm rounded-lg border border-slate-200 dark:border-zinc-700 bg-slate-50/50 dark:bg-zinc-800/50 focus:bg-white dark:focus:bg-zinc-900 p-2 focus:ring-2 focus:ring-wp-blue outline-none resize-y transition-all text-slate-800 dark:text-zinc-200" rows="2" data-input-idx="${entry.index}">${escapeHtml(entry.msgstr)}</textarea>
+                    </td>
+                `;
+
+                const textarea = tr.querySelector('textarea');
+                textarea.addEventListener('input', (e) => {
+                    const idx = parseInt(e.target.getAttribute('data-input-idx'));
+                    const val = e.target.value;
+                    translationEntries[idx].msgstr = val;
+                    translationEntries[idx].isTranslated = val.trim() !== "";
+                    updateStats();
+                    saveToLocalStorage();
+                });
+
+                translationTableBody.appendChild(tr);
+            });
+        }
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active', 'bg-wp-blue', 'text-white'));
+                filterBtns.forEach(b => b.classList.add('bg-slate-100', 'text-slate-600', 'dark:bg-zinc-700', 'dark:text-zinc-300'));
+                
+                btn.classList.add('active', 'bg-wp-blue', 'text-white');
+                btn.classList.remove('bg-slate-100', 'text-slate-600', 'dark:bg-zinc-700', 'dark:text-zinc-300');
+                
+                const activeFilter = btn.getAttribute('data-filter');
+                renderTable(activeFilter, searchInput.value);
+            });
+        });
+
+        searchInput.addEventListener('input', (e) => {
+            const activeFilterBtn = document.querySelector('.filter-btn.active');
+            const activeFilter = activeFilterBtn ? activeFilterBtn.getAttribute('data-filter') : 'all';
+            renderTable(activeFilter, e.target.value);
+        });
+
+        function updateStats() {
+            const total = translationEntries.length;
+            const translated = translationEntries.filter(e => e.isTranslated).length;
+            const pending = total - translated;
+
+            statTotal.innerText = total;
+            statTranslated.innerText = translated;
+            statPending.innerText = pending;
+            statFuzzy.innerText = 0;
+
+            const pct = total > 0 ? Math.round((translated / total) * 100) : 0;
+            document.getElementById('progressBar').style.width = `${pct}%`;
+            document.getElementById('progressText').innerText = `${pct}% (${translated}/${total})`;
+        }
+
+        // --- SISTEMA PRESERVACIÓN DE VARIABLES DE LOCALIZACIÓN ---
+        function preserveVariables(text) {
+            const placeholders = [];
+            let processedText = text;
+            const wpRegex = /%[0-9]*\$?[sdFf]/g;
+            const htmlRegex = /<\/?[a-z][\s\S]*?>/g;
+
+            const regexes = [wpRegex, htmlRegex];
+            let placeholderId = 0;
+
+            regexes.forEach(regex => {
+                processedText = processedText.replace(regex, (match) => {
+                    const id = `__WP_VAR_${placeholderId++}__`;
+                    placeholders.push({ id, original: match });
+                    return id;
+                });
+            });
+
+            return { processedText, placeholders };
+        }
+
+        function restoreVariables(translatedText, placeholders) {
+            let restored = translatedText;
+            placeholders.forEach(item => {
+                const regex = new RegExp(item.id, 'g');
+                restored = restored.replace(regex, item.original);
+            });
+            return restored;
+        }
+
+        // LLAMADA A API EXTERNA
+        async function callTranslateAPI(text, from, to) {
+            if (!text.trim()) return "";
+            const { processedText, placeholders } = preserveVariables(text);
+            const engine = translateEngine.value;
+            let resultText = "";
+
+            if (engine === 'google_free') {
+                const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${from}&tl=${to}&dt=t&q=${encodeURIComponent(processedText)}`;
+                const response = await fetch(url);
+                if (!response.ok) throw new Error("Error en la API pública de Google Translate");
+                const data = await response.json();
+                resultText = data[0].map(x => x[0]).join('');
+            } else if (engine === 'deepl') {
+                const key = apiKey.value.trim();
+                if (!key) throw new Error("Falta la API Key de DeepL");
+                const url = `https://api-free.deepl.com/v2/translate`;
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: `auth_key=${key}&text=${encodeURIComponent(processedText)}&target_lang=${to.toUpperCase()}`
+                });
+                if (!response.ok) throw new Error("Error en la API de DeepL");
+                const data = await response.json();
+                resultText = data.translations[0].text;
+            } else if (engine === 'openai') {
+                const key = apiKey.value.trim();
+                if (!key) throw new Error("Falta la API Key de OpenAI");
+                const url = `https://api.openai.com/v1/chat/completions`;
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${key}`
+                    },
+                    body: JSON.stringify({
+                        model: "gpt-4o-mini",
+                        messages: [
+                            { role: "system", content: "You are a professional software localization translator. Translate text accurately and preserve exact internal placeholder variables intact." },
+                            { role: "user", content: `Translate from ${from} to ${to}: "${processedText}"` }
+                        ],
+                        temperature: 0.3
+                    })
+                });
+                if (!response.ok) throw new Error("Error en la API de OpenAI");
+                const data = await response.json();
+                resultText = data.choices[0].message.content.trim().replace(/^"|"$/g, '');
+            }
+
+            return restoreVariables(resultText, placeholders);
+        }
+
+        async function runAutoTranslation() {
+            if (isTranslating) return;
+            const pendingEntries = translationEntries.filter(e => !e.isTranslated);
+            if (pendingEntries.length === 0) {
+                showToast("No hay cadenas pendientes por traducir.");
+                return;
+            }
+
+            isTranslating = true;
+            btnAutoTranslate.classList.add('hidden');
+            btnStop.classList.remove('hidden');
+
+            const source = langSource.value;
+            const target = langTarget.value;
+            const delay = parseInt(delayMs.value);
+
+            showToast("Comenzando traducción masiva...");
+
+            for (let i = 0; i < translationEntries.length; i++) {
+                if (!isTranslating) break;
+                const entry = translationEntries[i];
+                if (entry.isTranslated) continue;
+
+                try {
+                    const translatedText = await callTranslateAPI(entry.msgid, source, target);
+                    entry.msgstr = translatedText;
+                    entry.isTranslated = true;
+                    
+                    const textarea = document.querySelector(`textarea[data-input-idx="${entry.index}"]`);
+                    if (textarea) textarea.value = translatedText;
+
+                    updateStats();
+                    saveToLocalStorage();
+
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                } catch (error) {
+                    console.error(error);
+                    showToast(`Error al traducir ID ${entry.index + 1}: ${error.message}`);
+                    break;
+                }
+            }
+
+            stopTranslation();
+        }
+
+        function stopTranslation() {
+            isTranslating = false;
+            btnAutoTranslate.classList.remove('hidden');
+            btnStop.classList.add('hidden');
+            showToast("Traducción finalizada o interrumpida.");
+        }
+
+        btnAutoTranslate.addEventListener('click', runAutoTranslation);
+        btnStop.addEventListener('click', stopTranslation);
+
+        btnClear.addEventListener('click', () => {
+            if (confirm("¿Limpiar todo el trabajo actual en el Traductor?")) {
+                localStorage.removeItem('wp_locotranslator_data');
+                translationEntries = [];
+                workspace.classList.add('hidden');
+                fileStatsBox.classList.add('hidden');
+                exportBar.classList.add('hidden');
+                dropZone.classList.remove('hidden');
+                fileInput.value = "";
+                showToast("Espacio de traducción limpiado.");
+            }
+        });
+
+
+        // ==========================================
+        // VISTA 2: GENERADOR / EXTRACTOR .POT (PHP)
+        // ==========================================
+
+        btnSelectFilesPHP.addEventListener('click', (e) => {
+            e.stopPropagation();
+            fileInputPHP.click();
+        });
+
+        btnSelectFolderPHP.addEventListener('click', (e) => {
+            e.stopPropagation();
+            folderInputPHP.click();
+        });
+
+        dropZonePHP.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZonePHP.classList.add('border-wp-blue', 'bg-wp-blue/5');
+        });
+
+        dropZonePHP.addEventListener('dragleave', () => {
+            dropZonePHP.classList.remove('border-wp-blue', 'bg-wp-blue/5');
+        });
+
+        dropZonePHP.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZonePHP.classList.remove('border-wp-blue', 'bg-wp-blue/5');
+            const files = Array.from(e.dataTransfer.files).filter(f => f.name.endsWith('.php'));
+            if (files.length > 0) {
+                processPHPFiles(files);
+            } else {
+                showToast("Por favor, suelta archivos con extensión .php.");
+            }
+        });
+
+        fileInputPHP.addEventListener('change', (e) => {
+            processPHPFiles(Array.from(e.target.files));
+        });
+
+        folderInputPHP.addEventListener('change', (e) => {
+            processPHPFiles(Array.from(e.target.files));
+        });
+
+        // PROCESADO DE ARCHIVOS PHP
+        async function processPHPFiles(files) {
+            const phpFiles = files.filter(f => f.name.endsWith('.php'));
+            if (phpFiles.length === 0) {
+                showToast("No se han encontrado archivos PHP para analizar.");
+                return;
+            }
+
+            showToast(`Analizando ${phpFiles.length} archivos PHP...`);
+            extractedStrings = {};
+            const domainFilter = textDomainInput.value.trim();
+
+            // Expresión regular robusta para cazar funciones l10n de WordPress
+            // Soporta: __(), _e(), _x(), _ex(), esc_html__(), esc_html_e(), esc_html_x(), esc_attr__(), esc_attr_e(), esc_attr_x()
+            // Captura el String original de manera exacta, soportando comillas simples y dobles.
+            const regexGettext = /(?:__|__|_e|_x|_ex|esc_html__|esc_html_e|esc_html_x|esc_attr__|esc_attr_e|esc_attr_x)\s*\(\s*('(?:[^'\\]|\\.)*'|"(?:[^"\\]|\\.)*")\s*(?:,\s*('(?:[^'\\]|\\.)*'|"(?:[^"\\]|\\.)*")\s*)?(?:,\s*('(?:[^'\\]|\\.)*'|"(?:[^"\\]|\\.)*")\s*)?\)/g;
+
+            for (const file of phpFiles) {
+                const text = await readFileAsText(file);
+                let match;
+
+                // Reset regex cursor
+                regexGettext.lastIndex = 0;
+
+                while ((match = regexGettext.exec(text)) !== null) {
+                    let rawMsgid = match[1];
+                    let rawDomain = match[2] || ""; // Segundo parámetro si existe (Domain o Contexto en _x)
+
+                    // Extraer los contenidos internos de las comillas
+                    const msgid = cleanQuotes(rawMsgid);
+                    const domain = cleanQuotes(rawDomain);
+
+                    // Si hay filtro de text domain activo, contrastar
+                    if (domainFilter && domain !== domainFilter) {
+                        continue;
+                    }
+
+                    if (!msgid) continue;
+
+                    if (!extractedStrings[msgid]) {
+                        extractedStrings[msgid] = {
+                            files: new Set()
+                        };
+                    }
+                    extractedStrings[msgid].files.add(`${file.name}`);
+                }
+            }
+
+            renderScannerResults(phpFiles.length);
+        }
+
+        function readFileAsText(file) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = (e) => resolve(e.target.result);
+                reader.readAsText(file, 'UTF-8');
+            });
+        }
+
+        function cleanQuotes(str) {
+            if (!str) return "";
+            str = str.trim();
+            if ((str.startsWith("'") && str.endsWith("'")) || (str.startsWith('"') && str.endsWith('"'))) {
+                return str.slice(1, -1).replace(/\\'/g, "'").replace(/\\"/g, '"');
+            }
+            return str;
+        }
+
+        // MOSTRAR CADENAS EN LA TABLA DEL ESCÁNER
+        function renderScannerResults(filesCount) {
+            scannerTableBody.innerHTML = '';
+            const keys = Object.keys(extractedStrings);
+
+            if (keys.length === 0) {
+                showToast("No se encontró ninguna cadena compatible con localización en los archivos.");
+                return;
+            }
+
+            let counter = 1;
+            for (const msgid in extractedStrings) {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50/50 dark:hover:bg-zinc-800/30 transition-colors";
+
+                const filesArray = Array.from(extractedStrings[msgid].files).join(', ');
+
+                tr.innerHTML = `
+                    <td class="py-3 px-4 text-xs text-slate-400 dark:text-zinc-500">${counter++}</td>
+                    <td class="py-3 px-4 text-slate-900 dark:text-zinc-200 truncate max-w-lg font-sans text-sm">${escapeHtml(msgid)}</td>
+                    <td class="py-3 px-4 text-xs text-slate-500 dark:text-zinc-400 font-mono">${escapeHtml(filesArray)}</td>
+                `;
+                scannerTableBody.appendChild(tr);
+            }
+
+            statScannedFiles.innerText = filesCount;
+            statUniqueStrings.innerText = keys.length;
+
+            dropZonePHP.classList.add('hidden');
+            scannerWorkspace.classList.remove('hidden');
+            scannerStatsBox.classList.remove('hidden');
+        }
+
+        // ENVIAR CADENAS EXTRACTADAS DIRECTAMENTE AL TRADUCTOR ACTIVO
+        btnLoadToTranslator.addEventListener('click', () => {
+            const keys = Object.keys(extractedStrings);
+            if (keys.length === 0) return;
+
+            translationEntries = [];
+            rawHeaders = `# Generated by WP Localization Suite - POT Scanner\nmsgid ""\nmsgstr ""\n"Content-Type: text/plain; charset=UTF-8\\n"\n\n`;
+            
+            keys.forEach((msgid, index) => {
+                const filesArray = Array.from(extractedStrings[msgid].files).join(', ');
+                translationEntries.push({
+                    index: index,
+                    msgid: msgid,
+                    msgstr: "",
+                    msgctxt: "",
+                    comments: [`#: ${filesArray}`],
+                    isTranslated: false
+                });
+            });
+
+            // Forzar UI a que limpie el dropZone anterior del traductor
+            dropZone.classList.add('hidden');
+            workspace.classList.remove('hidden');
+            fileStatsBox.classList.remove('hidden');
+            exportBar.classList.remove('hidden');
+
+            updateStats();
+            renderTable();
+            saveToLocalStorage();
+
+            showToast("¡Se han importado todas las cadenas al Traductor de .PO!");
+            switchTab('translate');
+        });
+
+        // DESCARGAR SOLO ARCHIVO .POT
+        btnDownloadPOT.addEventListener('click', () => {
+            const keys = Object.keys(extractedStrings);
+            if (keys.length === 0) return;
+
+            let potContent = `# POT Template generated by WP Localization Suite\n`;
+            potContent += `msgid ""\nmsgstr ""\n"Content-Type: text/plain; charset=UTF-8\\n"\n\n`;
+
+            keys.forEach(msgid => {
+                const filesArray = Array.from(extractedStrings[msgid].files).join(', ');
+                potContent += `#: ${filesArray}\n`;
+                potContent += `msgid "${msgid}"\n`;
+                potContent += `msgstr ""\n\n`;
+            });
+
+            const fileName = textDomainInput.value.trim() ? `${textDomainInput.value.trim()}.pot` : 'project-template.pot';
+            triggerDownload(fileName, potContent, 'text/plain');
+        });
+
+        // RESET DE ESCÁNER
+        btnResetScanner.addEventListener('click', () => {
+            extractedStrings = {};
+            scannerTableBody.innerHTML = '';
+            scannerWorkspace.classList.add('hidden');
+            scannerStatsBox.classList.add('hidden');
+            dropZonePHP.classList.remove('hidden');
+            fileInputPHP.value = "";
+            folderInputPHP.value = "";
+            showToast("Módulo de escáner reseteado.");
+        });
+
+
+        // ==========================================
+        // EXPORTADOR Y LÓGICA DE COMPILACIÓN BINARIA
+        // ==========================================
+
+        btnExportPO.addEventListener('click', () => {
+            let poContent = "";
+            poContent += rawHeaders || `# Generated by WP Localization Suite\nmsgid ""\nmsgstr ""\n"Content-Type: text/plain; charset=UTF-8\\n"\n\n`;
+
+            translationEntries.forEach(entry => {
+                if (entry.comments && entry.comments.length > 0) {
+                    poContent += entry.comments.join('\n') + '\n';
+                }
+                if (entry.msgctxt) {
+                    poContent += `msgctxt "${entry.msgctxt}"\n`;
+                }
+                poContent += `msgid "${entry.msgid}"\n`;
+                poContent += `msgstr "${entry.msgstr}"\n\n`;
+            });
+
+            const targetLang = langTarget.value;
+            triggerDownload(`${originalFileName}-${targetLang}.po`, poContent, 'text/plain');
+        });
+
+        btnExportMO.addEventListener('click', () => {
+            const validEntries = translationEntries.filter(e => e.msgid !== "");
+            
+            validEntries.sort((a, b) => {
+                if (a.msgid < b.msgid) return -1;
+                if (a.msgid > b.msgid) return 1;
+                return 0;
+            });
+
+            const numStrings = validEntries.length;
+            const tableOriginalOffset = 28;
+            const tableTranslationOffset = tableOriginalOffset + (numStrings * 8);
+            const dataOffset = tableTranslationOffset + (numStrings * 8);
+
+            let originalStringsBuffer = [];
+            let translationStringsBuffer = [];
+            const origTable = [];
+            const transTable = [];
+
+            let currentOriginalOffset = dataOffset;
+            
+            validEntries.forEach(entry => {
+                const origBytes = new TextEncoder().encode(entry.msgid);
+                origTable.push({ offset: currentOriginalOffset, length: origBytes.length });
+                originalStringsBuffer.push(origBytes, new Uint8Array([0]));
+                currentOriginalOffset += origBytes.length + 1;
+            });
+
+            let currentTranslationOffset = currentOriginalOffset;
+
+            validEntries.forEach(entry => {
+                const transBytes = new TextEncoder().encode(entry.msgstr || "");
+                transTable.push({ offset: currentTranslationOffset, length: transBytes.length });
+                translationStringsBuffer.push(transBytes, new Uint8Array([0]));
+                currentTranslationOffset += transBytes.length + 1;
+            });
+
+            const totalSize = currentTranslationOffset;
+            const arrayBuffer = new ArrayBuffer(totalSize);
+            const view = new DataView(arrayBuffer);
+
+            // Cabecera Gettext .MO (Little Endian)
+            view.setUint32(0, 0x950412de, true); 
+            view.setUint32(4, 0, true);          
+            view.setUint32(8, numStrings, true); 
+            view.setUint32(12, tableOriginalOffset, true);
+            view.setUint32(16, tableTranslationOffset, true);
+            view.setUint32(20, 0, true); 
+            view.setUint32(24, 0, true); 
+
+            let currentPointer = tableOriginalOffset;
+            origTable.forEach(item => {
+                view.setUint32(currentPointer, item.length, true);
+                view.setUint32(currentPointer + 4, item.offset, true);
+                currentPointer += 8;
+            });
+
+            currentPointer = tableTranslationOffset;
+            transTable.forEach(item => {
+                view.setUint32(currentPointer, item.length, true);
+                view.setUint32(currentPointer + 4, item.offset, true);
+                currentPointer += 8;
+            });
+
+            const u8View = new Uint8Array(arrayBuffer);
+            let bytePointer = dataOffset;
+
+            originalStringsBuffer.forEach(buffer => {
+                u8View.set(buffer, bytePointer);
+                bytePointer += buffer.length;
+            });
+
+            translationStringsBuffer.forEach(buffer => {
+                u8View.set(buffer, bytePointer);
+                bytePointer += buffer.length;
+            });
+
+            const blob = new Blob([arrayBuffer], { type: 'application/octet-stream' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${originalFileName}-${langTarget.value}.mo`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast("¡Archivo binario .MO compilado y descargado!");
+        });
+
+
+        // --- PERSISTENCIA Y PERSISTENCIA LOCAL (LOCALSTORAGE) ---
+        function saveToLocalStorage() {
+            const data = {
+                originalFileName,
+                rawHeaders,
+                translationEntries
+            };
+            localStorage.setItem('wp_locotranslator_data', JSON.stringify(data));
+        }
+
+        function loadFromLocalStorage() {
+            const saved = localStorage.getItem('wp_locotranslator_data');
+            if (saved) {
+                try {
+                    const parsed = JSON.parse(saved);
+                    originalFileName = parsed.originalFileName || "locale";
+                    rawHeaders = parsed.rawHeaders || "";
+                    translationEntries = parsed.translationEntries || [];
+
+                    if (translationEntries.length > 0) {
+                        dropZone.classList.add('hidden');
+                        workspace.classList.remove('hidden');
+                        fileStatsBox.classList.remove('hidden');
+                        exportBar.classList.remove('hidden');
+                        updateStats();
+                        renderTable();
+                        showToast("Sesión de traducción previa restaurada.");
+                    }
+                } catch(e) {
+                    console.error("Error cargando sesión previa", e);
+                }
+            }
+        }
+
+        // --- HELPERS COMUNES ---
+        function triggerDownload(filename, text, mimeType) {
+            const blob = new Blob([text], { type: mimeType });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast(`¡Archivo ${filename} descargado!`);
+        }
+
+        function escapeHtml(text) {
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        window.addEventListener('DOMContentLoaded', loadFromLocalStorage);
+
+    </script>
+</body>
+</html>
