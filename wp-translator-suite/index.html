@@ -47,30 +47,30 @@
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 dark:bg-zinc-900 dark:text-zinc-100 min-h-full flex flex-col font-sans transition-colors duration-200">
+<body class="bg-slate-50 text-slate-800 dark:bg-zinc-900 dark:text-zinc-100 min-h-full flex flex-col font-sans transition-colors duration-200 pb-20 sm:pb-0">
 
     <header class="bg-white dark:bg-zinc-800 border-b border-slate-200 dark:border-zinc-700 sticky top-0 z-30 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <div class="bg-wp-blue text-white p-2 rounded-lg flex items-center justify-center">
-                    <i class="fa-brands fa-wordpress text-2xl"></i>
+            <div class="flex items-center space-x-2.5 min-w-0">
+                <div class="bg-wp-blue text-white p-2 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <i class="fa-brands fa-wordpress text-xl sm:text-2xl"></i>
                 </div>
-                <div>
-                    <h1 class="text-lg font-bold tracking-tight">WP Localization Suite</h1>
-                    <p class="text-xs text-slate-500 dark:text-zinc-400">Traductor offline y extractor .POT en tu navegador</p>
+                <div class="min-w-0">
+                    <h1 class="text-sm sm:text-lg font-bold tracking-tight truncate">WP Localization Suite</h1>
+                    <p class="text-[10px] sm:text-xs text-slate-500 dark:text-zinc-400 truncate">Traductor y extractor .POT offline</p>
                 </div>
             </div>
             
-            <div class="flex items-center space-x-1 bg-slate-100 dark:bg-zinc-700 p-1 rounded-xl">
-                <button id="tabBtnTranslate" class="px-4 py-2 text-xs font-bold rounded-lg transition-all bg-white dark:bg-zinc-600 shadow-sm text-wp-blue dark:text-white flex items-center gap-2">
+            <div class="hidden sm:flex items-center space-x-1 bg-slate-100 dark:bg-zinc-700 p-1 rounded-xl">
+                <button id="tabBtnTranslate" class="tab-btn px-4 py-2 text-xs font-bold rounded-lg transition-all bg-white dark:bg-zinc-600 shadow-sm text-wp-blue dark:text-white flex items-center gap-2">
                     <i class="fa-solid fa-language"></i> Traductor .PO
                 </button>
-                <button id="tabBtnExtractor" class="px-4 py-2 text-xs font-bold rounded-lg transition-all text-slate-600 dark:text-zinc-300 hover:bg-white/50 dark:hover:bg-zinc-600/50 flex items-center gap-2">
+                <button id="tabBtnExtractor" class="tab-btn px-4 py-2 text-xs font-bold rounded-lg transition-all text-slate-600 dark:text-zinc-300 hover:bg-white/50 dark:hover:bg-zinc-600/50 flex items-center gap-2">
                     <i class="fa-solid fa-wand-magic-sparkles"></i> Generador .POT
                 </button>
             </div>
 
-            <div class="flex items-center space-x-4">
+            <div class="flex items-center space-x-2 flex-shrink-0">
                 <button id="themeToggle" class="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-zinc-700 dark:hover:bg-zinc-600 transition-colors text-slate-600 dark:text-zinc-200" title="Cambiar tema">
                     <i class="fa-solid fa-moon dark:hidden"></i>
                     <i class="fa-solid fa-sun hidden dark:inline"></i>
@@ -78,6 +78,17 @@
             </div>
         </div>
     </header>
+
+    <nav class="sm:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-zinc-800 border-t border-slate-200 dark:border-zinc-700 z-40 flex justify-around items-center h-16 shadow-lg">
+        <button id="mobTabBtnTranslate" class="mob-tab-btn flex flex-col items-center justify-center w-1/2 h-full text-wp-blue dark:text-white">
+            <i class="fa-solid fa-language text-lg mb-1"></i>
+            <span class="text-[10px] font-bold">Traductor .PO</span>
+        </button>
+        <button id="mobTabBtnExtractor" class="mob-tab-btn flex flex-col items-center justify-center w-1/2 h-full text-slate-500 dark:text-zinc-400">
+            <i class="fa-solid fa-wand-magic-sparkles text-lg mb-1"></i>
+            <span class="text-[10px] font-semibold">Generador .POT</span>
+        </button>
+    </nav>
 
     <main id="viewTranslate" class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col lg:flex-row gap-6">
         
@@ -113,7 +124,6 @@
                             <option value="ca">Catalán (ca)</option>
                             <option value="gl">Gallego (gl)</option>
                             <option value="ast">Asturiano (ast)</option>
-                            <option value="co">Andaluz (andaluz)</option>
                         </select>
                     </div>
                 </div>
@@ -146,7 +156,7 @@
                 <h3 class="font-semibold text-sm border-b border-slate-100 dark:border-zinc-700 pb-2">Resumen del Archivo</h3>
                 <div class="grid grid-cols-2 gap-2 text-xs">
                     <div class="bg-slate-50 dark:bg-zinc-700/50 p-2 rounded">
-                        <p class="text-slate-400">Total cadenas</p>
+                        <p class="text-slate-400">Total</p>
                         <p id="statTotal" class="text-lg font-bold">0</p>
                     </div>
                     <div class="bg-emerald-50 dark:bg-emerald-950/20 p-2 rounded">
@@ -167,16 +177,16 @@
 
         <section class="flex-1 flex flex-col min-w-0 space-y-6">
             
-            <div id="dropZone" class="border-2 border-dashed border-slate-300 dark:border-zinc-700 hover:border-wp-blue dark:hover:border-wp-blue bg-white dark:bg-zinc-800/50 rounded-2xl p-10 flex flex-col items-center justify-center text-center cursor-pointer transition-all shadow-sm">
+            <div id="dropZone" class="border-2 border-dashed border-slate-300 dark:border-zinc-700 hover:border-wp-blue dark:hover:border-wp-blue bg-white dark:bg-zinc-800/50 rounded-2xl p-6 sm:p-10 flex flex-col items-center justify-center text-center cursor-pointer transition-all shadow-sm">
                 <input type="file" id="fileInput" accept=".po,.pot" class="hidden">
                 <div class="bg-wp-blue/10 text-wp-blue w-16 h-16 rounded-full flex items-center justify-center mb-4 transition-transform hover:scale-110">
                     <i class="fa-solid fa-file-import text-3xl"></i>
                 </div>
-                <h3 class="text-lg font-semibold mb-1">Arrastra tu archivo .PO o .POT aquí</h3>
-                <p class="text-sm text-slate-500 dark:text-zinc-400 mb-4 max-w-sm">O si lo prefieres, haz clic para explorar en tu ordenador</p>
+                <h3 class="text-base sm:text-lg font-semibold mb-1">Arrastra tu archivo .PO o .POT aquí</h3>
+                <p class="text-xs sm:text-sm text-slate-500 dark:text-zinc-400 mb-4 max-w-sm">O si lo prefieres, haz clic para explorar en tu ordenador</p>
                 <div class="flex gap-2">
-                    <span class="text-xs bg-slate-100 dark:bg-zinc-700 px-3 py-1.5 rounded-md font-mono">ejemplo.po</span>
-                    <span class="text-xs bg-slate-100 dark:bg-zinc-700 px-3 py-1.5 rounded-md font-mono">ejemplo.pot</span>
+                    <span class="text-[10px] sm:text-xs bg-slate-100 dark:bg-zinc-700 px-3 py-1.5 rounded-md font-mono">ejemplo.po</span>
+                    <span class="text-[10px] sm:text-xs bg-slate-100 dark:bg-zinc-700 px-3 py-1.5 rounded-md font-mono">ejemplo.pot</span>
                 </div>
             </div>
 
@@ -186,7 +196,7 @@
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                         <div class="flex-1 w-full">
                             <div class="flex justify-between items-center mb-1 text-xs font-semibold">
-                                <span class="text-slate-500 dark:text-zinc-400">Progreso de la traducción automática</span>
+                                <span class="text-slate-500 dark:text-zinc-400">Progreso de traducción</span>
                                 <span id="progressText" class="text-wp-blue">0% (0/0)</span>
                             </div>
                             <div class="w-full bg-slate-100 dark:bg-zinc-700 h-3 rounded-full overflow-hidden">
@@ -194,13 +204,13 @@
                             </div>
                         </div>
                         <div class="flex flex-wrap gap-2 w-full sm:w-auto justify-end">
-                            <button id="btnAutoTranslate" class="bg-wp-blue hover:bg-wp-darkblue text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors flex items-center gap-2">
+                            <button id="btnAutoTranslate" class="bg-wp-blue hover:bg-wp-darkblue text-white px-3.5 py-2 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1.5">
                                 <i class="fa-solid fa-robot"></i> Traducir Todo
                             </button>
-                            <button id="btnStop" class="hidden bg-rose-600 hover:bg-rose-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors flex items-center gap-2">
+                            <button id="btnStop" class="hidden bg-rose-600 hover:bg-rose-700 text-white px-3.5 py-2 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1.5">
                                 <i class="fa-solid fa-circle-stop"></i> Detener
                             </button>
-                            <button id="btnClear" class="bg-slate-100 hover:bg-slate-200 dark:bg-zinc-700 dark:hover:bg-zinc-600 px-4 py-2 rounded-lg text-sm font-semibold transition-colors flex items-center gap-2">
+                            <button id="btnClear" class="bg-slate-100 hover:bg-slate-200 dark:bg-zinc-700 dark:hover:bg-zinc-600 px-3.5 py-2 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1.5">
                                 <i class="fa-solid fa-trash-can"></i> Limpiar
                             </button>
                         </div>
@@ -209,27 +219,27 @@
                     <div class="flex flex-col md:flex-row gap-3 pt-3 border-t border-slate-100 dark:border-zinc-700">
                         <div class="relative flex-1">
                             <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
-                            <input type="text" id="searchInput" placeholder="Buscar por msgid o msgstr..." class="w-full rounded-lg border border-slate-300 dark:border-zinc-600 bg-white dark:bg-zinc-700 pl-9 pr-4 py-2 text-sm focus:ring-2 focus:ring-wp-blue outline-none">
+                            <input type="text" id="searchInput" placeholder="Buscar por msgid o msgstr..." class="w-full rounded-lg border border-slate-300 dark:border-zinc-600 bg-white dark:bg-zinc-700 pl-9 pr-4 py-2 text-xs sm:text-sm focus:ring-2 focus:ring-wp-blue outline-none">
                         </div>
-                        <div class="flex gap-2">
-                            <button data-filter="all" class="filter-btn active bg-wp-blue text-white px-3.5 py-1.5 rounded-lg text-xs font-semibold">Todas</button>
-                            <button data-filter="pending" class="filter-btn bg-slate-100 hover:bg-slate-200 dark:bg-zinc-700 dark:hover:bg-zinc-600 text-slate-600 dark:text-zinc-300 px-3.5 py-1.5 rounded-lg text-xs font-semibold">Pendientes</button>
-                            <button data-filter="translated" class="filter-btn bg-slate-100 hover:bg-slate-200 dark:bg-zinc-700 dark:hover:bg-zinc-600 text-slate-600 dark:text-zinc-300 px-3.5 py-1.5 rounded-lg text-xs font-semibold">Traducidas</button>
+                        <div class="flex gap-1.5 overflow-x-auto pb-1 sm:pb-0">
+                            <button data-filter="all" class="filter-btn active bg-wp-blue text-white px-3 py-1.5 rounded-lg text-[10px] sm:text-xs font-semibold whitespace-nowrap">Todas</button>
+                            <button data-filter="pending" class="filter-btn bg-slate-100 hover:bg-slate-200 dark:bg-zinc-700 dark:hover:bg-zinc-600 text-slate-600 dark:text-zinc-300 px-3 py-1.5 rounded-lg text-[10px] sm:text-xs font-semibold whitespace-nowrap">Pendientes</button>
+                            <button data-filter="translated" class="filter-btn bg-slate-100 hover:bg-slate-200 dark:bg-zinc-700 dark:hover:bg-zinc-600 text-slate-600 dark:text-zinc-300 px-3 py-1.5 rounded-lg text-[10px] sm:text-xs font-semibold whitespace-nowrap">Traducidas</button>
                         </div>
                     </div>
                 </div>
 
                 <div class="bg-white dark:bg-zinc-800 rounded-xl border border-slate-200 dark:border-zinc-700 shadow-sm overflow-hidden flex-1 flex flex-col">
                     <div class="overflow-x-auto overflow-y-auto max-h-[500px] flex-1">
-                        <table class="w-full text-left border-collapse min-w-[600px]">
-                            <thead class="bg-slate-50 dark:bg-zinc-800/50 border-b border-slate-200 dark:border-zinc-700 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400 sticky top-0 z-10">
+                        <table class="w-full text-left border-collapse min-w-[500px]">
+                            <thead class="bg-slate-50 dark:bg-zinc-800/50 border-b border-slate-200 dark:border-zinc-700 text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400 sticky top-0 z-10">
                                 <tr>
-                                    <th class="py-3.5 px-4 w-12">#</th>
-                                    <th class="py-3.5 px-4 w-1/2">Origen (msgid)</th>
-                                    <th class="py-3.5 px-4 w-1/2">Traducción (msgstr)</th>
+                                    <th class="py-3 px-3 w-10">#</th>
+                                    <th class="py-3 px-3 w-1/2">Origen (msgid)</th>
+                                    <th class="py-3 px-3 w-1/2">Traducción (msgstr)</th>
                                 </tr>
                             </thead>
-                            <tbody id="translationTableBody" class="divide-y divide-slate-100 dark:divide-zinc-700 text-sm">
+                            <tbody id="translationTableBody" class="divide-y divide-slate-100 dark:divide-zinc-700 text-xs sm:text-sm">
                                 </tbody>
                         </table>
                     </div>
@@ -249,12 +259,12 @@
                 <div>
                     <label class="block text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider mb-1">Text Domain a buscar</label>
                     <input type="text" id="textDomainInput" placeholder="Ej. mi-plugin-o-tema" class="w-full rounded-lg border border-slate-300 dark:border-zinc-600 bg-white dark:bg-zinc-700 p-2.5 text-sm focus:ring-2 focus:ring-wp-blue outline-none font-mono">
-                    <p class="text-[10px] text-slate-400 mt-1">Se extraerán preferentemente las cadenas que coincidan con este dominio. Déjalo vacío para extraer todas las detectadas.</p>
+                    <p class="text-[10px] text-slate-400 mt-1">Se extraerán preferentemente las cadenas que coincidan con este dominio. Déjalo vacío para extraer todas.</p>
                 </div>
             </div>
 
             <div id="scannerStatsBox" class="hidden bg-white dark:bg-zinc-800 rounded-xl p-5 border border-slate-200 dark:border-zinc-700 shadow-sm space-y-4">
-                <h3 class="font-semibold text-sm border-b border-slate-100 dark:border-zinc-700 pb-2 font-sans">Estadísticas de Extracción</h3>
+                <h3 class="font-semibold text-sm border-b border-slate-100 dark:border-zinc-700 pb-2">Estadísticas de Extracción</h3>
                 <div class="grid grid-cols-2 gap-2 text-xs">
                     <div class="bg-slate-50 dark:bg-zinc-700/50 p-2 rounded">
                         <p class="text-slate-400">Archivos PHP</p>
@@ -269,21 +279,21 @@
         </aside>
 
         <section class="flex-1 flex flex-col min-w-0 space-y-6">
-            <div id="dropZonePHP" class="border-2 border-dashed border-slate-300 dark:border-zinc-700 hover:border-wp-blue dark:hover:border-wp-blue bg-white dark:bg-zinc-800/50 rounded-2xl p-12 flex flex-col items-center justify-center text-center cursor-pointer transition-all shadow-sm">
+            <div id="dropZonePHP" class="border-2 border-dashed border-slate-300 dark:border-zinc-700 hover:border-wp-blue dark:hover:border-wp-blue bg-white dark:bg-zinc-800/50 rounded-2xl p-6 sm:p-12 flex flex-col items-center justify-center text-center cursor-pointer transition-all shadow-sm">
                 <input type="file" id="fileInputPHP" accept=".php" multiple class="hidden">
                 <input type="file" id="folderInputPHP" webkitdirectory directory multiple class="hidden">
                 
                 <div class="bg-wp-blue/10 text-wp-blue w-16 h-16 rounded-full flex items-center justify-center mb-4 transition-transform hover:scale-110">
                     <i class="fa-solid fa-folder-open text-3xl"></i>
                 </div>
-                <h3 class="text-lg font-semibold mb-1">Arrastra tus archivos o la carpeta de tu Plugin / Tema</h3>
-                <p class="text-sm text-slate-500 dark:text-zinc-400 mb-4 max-w-md">Analizaremos recursivamente todos los archivos .php para extraer las funciones de traducción de WordPress.</p>
+                <h3 class="text-base sm:text-lg font-semibold mb-1">Arrastra tus archivos o la carpeta de tu Plugin / Tema</h3>
+                <p class="text-xs sm:text-sm text-slate-500 dark:text-zinc-400 mb-4 max-w-md">Analizaremos recursivamente todos los archivos .php para extraer las funciones de traducción de WordPress.</p>
                 
-                <div class="flex gap-3">
-                    <button id="btnSelectFilesPHP" class="bg-slate-200 hover:bg-slate-300 dark:bg-zinc-700 dark:hover:bg-zinc-600 text-slate-800 dark:text-white px-4 py-2 rounded-lg text-xs font-bold transition-all">
+                <div class="flex flex-col sm:flex-row gap-2.5 w-full sm:w-auto">
+                    <button id="btnSelectFilesPHP" class="bg-slate-200 hover:bg-slate-300 dark:bg-zinc-700 dark:hover:bg-zinc-600 text-slate-800 dark:text-white px-4 py-2 rounded-lg text-xs font-bold transition-all w-full sm:w-auto">
                         Seleccionar Archivos PHP
                     </button>
-                    <button id="btnSelectFolderPHP" class="bg-wp-blue hover:bg-wp-darkblue text-white px-4 py-2 rounded-lg text-xs font-bold transition-all">
+                    <button id="btnSelectFolderPHP" class="bg-wp-blue hover:bg-wp-darkblue text-white px-4 py-2 rounded-lg text-xs font-bold transition-all w-full sm:w-auto">
                         Seleccionar Carpeta Completa
                     </button>
                 </div>
@@ -291,34 +301,34 @@
 
             <div id="scannerWorkspace" class="hidden flex-1 flex flex-col space-y-4">
                 <div class="bg-white dark:bg-zinc-800 rounded-xl p-4 border border-slate-200 dark:border-zinc-700 shadow-sm flex flex-col sm:flex-row justify-between items-center gap-4">
-                    <div>
-                        <h3 class="font-bold text-sm">Cadenas extraídas de tu código fuente</h3>
-                        <p class="text-xs text-slate-500 dark:text-zinc-400">Verifica la lista de cadenas de localización recopiladas de los ficheros procesados.</p>
+                    <div class="text-center sm:text-left">
+                        <h3 class="font-bold text-sm">Cadenas extraídas del código</h3>
+                        <p class="text-xs text-slate-500 dark:text-zinc-400">Verifica la lista de cadenas l10n recopiladas de los ficheros.</p>
                     </div>
-                    <div class="flex gap-2 w-full sm:w-auto justify-end">
-                        <button id="btnLoadToTranslator" class="bg-wp-blue hover:bg-wp-darkblue text-white px-4 py-2.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2">
-                            <i class="fa-solid fa-arrow-right-to-bracket"></i> Cargar en el Traductor
+                    <div class="flex flex-wrap gap-2 w-full sm:w-auto justify-center sm:justify-end">
+                        <button id="btnLoadToTranslator" class="bg-wp-blue hover:bg-wp-darkblue text-white px-3.5 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5">
+                            <i class="fa-solid fa-arrow-right-to-bracket"></i> Cargar al Traductor
                         </button>
-                        <button id="btnDownloadPOT" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2">
-                            <i class="fa-solid fa-file-arrow-down"></i> Descargar plantilla .POT
+                        <button id="btnDownloadPOT" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3.5 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5">
+                            <i class="fa-solid fa-file-arrow-down"></i> Guardar .POT
                         </button>
-                        <button id="btnResetScanner" class="bg-slate-100 hover:bg-slate-200 dark:bg-zinc-700 dark:hover:bg-zinc-600 px-4 py-2.5 rounded-lg text-xs font-bold transition-all">
-                            Limpiar Escáner
+                        <button id="btnResetScanner" class="bg-slate-100 hover:bg-slate-200 dark:bg-zinc-700 dark:hover:bg-zinc-600 px-3.5 py-2 rounded-lg text-xs font-bold transition-all">
+                            Limpiar
                         </button>
                     </div>
                 </div>
 
                 <div class="bg-white dark:bg-zinc-800 rounded-xl border border-slate-200 dark:border-zinc-700 shadow-sm overflow-hidden flex-1 flex flex-col">
                     <div class="overflow-x-auto overflow-y-auto max-h-[500px] flex-1">
-                        <table class="w-full text-left border-collapse min-w-[600px]">
-                            <thead class="bg-slate-50 dark:bg-zinc-800/50 border-b border-slate-200 dark:border-zinc-700 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400 sticky top-0 z-10">
+                        <table class="w-full text-left border-collapse min-w-[500px]">
+                            <thead class="bg-slate-50 dark:bg-zinc-800/50 border-b border-slate-200 dark:border-zinc-700 text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400 sticky top-0 z-10">
                                 <tr>
-                                    <th class="py-3.5 px-4 w-12">#</th>
-                                    <th class="py-3.5 px-4 w-[60%]">Texto Original (msgid)</th>
-                                    <th class="py-3.5 px-4 w-[40%]">Ubicación (Referencias)</th>
+                                    <th class="py-3 px-3 w-10">#</th>
+                                    <th class="py-3 px-3 w-[55%]">Texto Original (msgid)</th>
+                                    <th class="py-3 px-3 w-[45%]">Ubicación (Referencias)</th>
                                 </tr>
                             </thead>
-                            <tbody id="scannerTableBody" class="divide-y divide-slate-100 dark:divide-zinc-700 text-sm font-mono">
+                            <tbody id="scannerTableBody" class="divide-y divide-slate-100 dark:divide-zinc-700 text-xs font-mono">
                                 </tbody>
                         </table>
                     </div>
@@ -327,27 +337,27 @@
         </section>
     </main>
 
-    <div id="exportBar" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 shadow-2xl rounded-2xl px-6 py-4 z-40 flex items-center justify-between gap-6 max-w-2xl w-[90%]">
-        <div class="flex items-center gap-3">
-            <div class="bg-emerald-500/10 text-emerald-500 p-2.5 rounded-lg">
-                <i class="fa-solid fa-circle-check text-xl"></i>
+    <div id="exportBar" class="hidden fixed bottom-20 sm:bottom-6 left-1/2 -translate-x-1/2 bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 shadow-2xl rounded-2xl px-4 sm:px-6 py-3.5 sm:py-4 z-45 flex items-center justify-between gap-4 max-w-2xl w-[92%]">
+        <div class="flex items-center gap-2.5 min-w-0">
+            <div class="bg-emerald-500/10 text-emerald-500 p-2 rounded-lg flex-shrink-0">
+                <i class="fa-solid fa-circle-check text-lg"></i>
             </div>
-            <div>
-                <p class="text-sm font-semibold">Listo para WordPress</p>
-                <p class="text-xs text-slate-500 dark:text-zinc-400">Descarga los ficheros e instálalos directamente</p>
+            <div class="min-w-0">
+                <p class="text-xs sm:text-sm font-semibold truncate">Listo para WP</p>
+                <p class="text-[10px] text-slate-500 dark:text-zinc-400 truncate hidden sm:block">Guarda los ficheros directamente</p>
             </div>
         </div>
-        <div class="flex items-center gap-2">
-            <button id="btnExportPO" class="bg-slate-800 hover:bg-black dark:bg-zinc-700 dark:hover:bg-zinc-600 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2">
-                <i class="fa-solid fa-file-code"></i> Guardar .PO
+        <div class="flex items-center gap-1.5 flex-shrink-0">
+            <button id="btnExportPO" class="bg-slate-800 hover:bg-black dark:bg-zinc-700 dark:hover:bg-zinc-600 text-white px-3 py-2 rounded-xl text-[11px] sm:text-xs font-bold transition-all flex items-center gap-1">
+                <i class="fa-solid fa-file-code"></i> .PO
             </button>
-            <button id="btnExportMO" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2">
-                <i class="fa-solid fa-cube"></i> Guardar .MO (Binario)
+            <button id="btnExportMO" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-xl text-[11px] sm:text-xs font-bold transition-all flex items-center gap-1">
+                <i class="fa-solid fa-cube"></i> .MO
             </button>
         </div>
     </div>
 
-    <div id="toast" class="fixed bottom-6 right-6 bg-slate-900 text-white dark:bg-white dark:text-zinc-950 px-4 py-3 rounded-lg shadow-xl text-xs font-semibold translate-y-20 opacity-0 transition-all duration-300 pointer-events-none z-50 flex items-center gap-2">
+    <div id="toast" class="fixed bottom-20 sm:bottom-6 right-6 bg-slate-900 text-white dark:bg-white dark:text-zinc-950 px-4 py-3 rounded-lg shadow-xl text-xs font-semibold translate-y-20 opacity-0 transition-all duration-300 pointer-events-none z-50 flex items-center gap-2">
         <i class="fa-solid fa-info-circle"></i> <span id="toastMsg">Mensaje de notificación</span>
     </div>
 
@@ -359,9 +369,12 @@
         let isTranslating = false;
         let originalFileName = "locale";
 
-        // --- MANEJO DE PESTAÑAS (TABS) ---
+        // --- MANEJO DE PESTAÑAS (Soporte Desktop y Mobile simultáneo) ---
         const tabBtnTranslate = document.getElementById('tabBtnTranslate');
         const tabBtnExtractor = document.getElementById('tabBtnExtractor');
+        const mobTabBtnTranslate = document.getElementById('mobTabBtnTranslate');
+        const mobTabBtnExtractor = document.getElementById('mobTabBtnExtractor');
+        
         const viewTranslate = document.getElementById('viewTranslate');
         const viewExtractor = document.getElementById('viewExtractor');
         const exportBar = document.getElementById('exportBar');
@@ -371,9 +384,14 @@
                 viewTranslate.classList.remove('hidden');
                 viewExtractor.classList.add('hidden');
                 
-                tabBtnTranslate.className = "px-4 py-2 text-xs font-bold rounded-lg transition-all bg-white dark:bg-zinc-600 shadow-sm text-wp-blue dark:text-white flex items-center gap-2";
-                tabBtnExtractor.className = "px-4 py-2 text-xs font-bold rounded-lg transition-all text-slate-600 dark:text-zinc-300 hover:bg-white/50 dark:hover:bg-zinc-600/50 flex items-center gap-2";
+                // Activar estilos en pestaña de escritorio
+                tabBtnTranslate.className = "tab-btn px-4 py-2 text-xs font-bold rounded-lg transition-all bg-white dark:bg-zinc-600 shadow-sm text-wp-blue dark:text-white flex items-center gap-2";
+                tabBtnExtractor.className = "tab-btn px-4 py-2 text-xs font-bold rounded-lg transition-all text-slate-600 dark:text-zinc-300 hover:bg-white/50 dark:hover:bg-zinc-600/50 flex items-center gap-2";
                 
+                // Activar estilos en pestaña de móvil
+                mobTabBtnTranslate.className = "mob-tab-btn flex flex-col items-center justify-center w-1/2 h-full text-wp-blue dark:text-white";
+                mobTabBtnExtractor.className = "mob-tab-btn flex flex-col items-center justify-center w-1/2 h-full text-slate-500 dark:text-zinc-400";
+
                 // Mostrar barra de descarga si hay traducción en marcha
                 if (translationEntries.length > 0) {
                     exportBar.classList.remove('hidden');
@@ -382,16 +400,26 @@
                 viewTranslate.classList.add('hidden');
                 viewExtractor.classList.remove('hidden');
                 
-                tabBtnExtractor.className = "px-4 py-2 text-xs font-bold rounded-lg transition-all bg-white dark:bg-zinc-600 shadow-sm text-wp-blue dark:text-white flex items-center gap-2";
-                tabBtnTranslate.className = "px-4 py-2 text-xs font-bold rounded-lg transition-all text-slate-600 dark:text-zinc-300 hover:bg-white/50 dark:hover:bg-zinc-600/50 flex items-center gap-2";
+                // Activar estilos en pestaña de escritorio
+                tabBtnExtractor.className = "tab-btn px-4 py-2 text-xs font-bold rounded-lg transition-all bg-white dark:bg-zinc-600 shadow-sm text-wp-blue dark:text-white flex items-center gap-2";
+                tabBtnTranslate.className = "tab-btn px-4 py-2 text-xs font-bold rounded-lg transition-all text-slate-600 dark:text-zinc-300 hover:bg-white/50 dark:hover:bg-zinc-600/50 flex items-center gap-2";
                 
+                // Activar estilos en pestaña de móvil
+                mobTabBtnExtractor.className = "mob-tab-btn flex flex-col items-center justify-center w-1/2 h-full text-wp-blue dark:text-white";
+                mobTabBtnTranslate.className = "mob-tab-btn flex flex-col items-center justify-center w-1/2 h-full text-slate-500 dark:text-zinc-400";
+
                 // Ocultar barra de descarga de traducción mientras se está en el extractor
                 exportBar.classList.add('hidden');
             }
         }
 
+        // Eventos para escritorio
         tabBtnTranslate.addEventListener('click', () => switchTab('translate'));
         tabBtnExtractor.addEventListener('click', () => switchTab('extractor'));
+        
+        // Eventos para móvil (Navegación inferior)
+        mobTabBtnTranslate.addEventListener('click', () => switchTab('translate'));
+        mobTabBtnExtractor.addEventListener('click', () => switchTab('extractor'));
 
         // --- SELECTORES DOM COMUNES ---
         const themeToggle = document.getElementById('themeToggle');
@@ -634,13 +662,13 @@
                 const escapedContext = entry.msgctxt ? `<span class="bg-indigo-100 dark:bg-indigo-950/50 text-indigo-700 dark:text-indigo-300 text-[10px] px-1.5 py-0.5 rounded font-mono block mb-1">Contexto: ${escapeHtml(entry.msgctxt)}</span>` : '';
 
                 tr.innerHTML = `
-                    <td class="py-4 px-4 text-xs font-mono text-slate-400 dark:text-zinc-500 align-top">${entry.index + 1}</td>
-                    <td class="py-4 px-4 align-top w-1/2">
+                    <td class="py-4 px-3 text-xs font-mono text-slate-400 dark:text-zinc-500 align-top">${entry.index + 1}</td>
+                    <td class="py-4 px-3 align-top w-1/2">
                         ${escapedContext}
                         <div class="whitespace-pre-wrap break-words font-sans text-slate-900 dark:text-zinc-100">${escapedMsgId}</div>
                     </td>
-                    <td class="py-3 px-4 align-top w-1/2">
-                        <textarea class="w-full text-sm rounded-lg border border-slate-200 dark:border-zinc-700 bg-slate-50/50 dark:bg-zinc-800/50 focus:bg-white dark:focus:bg-zinc-900 p-2 focus:ring-2 focus:ring-wp-blue outline-none resize-y transition-all text-slate-800 dark:text-zinc-200" rows="2" data-input-idx="${entry.index}">${escapeHtml(entry.msgstr)}</textarea>
+                    <td class="py-3 px-3 align-top w-1/2">
+                        <textarea class="w-full text-xs sm:text-sm rounded-lg border border-slate-200 dark:border-zinc-700 bg-slate-50/50 dark:bg-zinc-800/50 focus:bg-white dark:focus:bg-zinc-900 p-2 focus:ring-2 focus:ring-wp-blue outline-none resize-y transition-all text-slate-800 dark:text-zinc-200" rows="2" data-input-idx="${entry.index}">${escapeHtml(entry.msgstr)}</textarea>
                     </td>
                 `;
 
@@ -897,27 +925,21 @@
             extractedStrings = {};
             const domainFilter = textDomainInput.value.trim();
 
-            // Expresión regular robusta para cazar funciones l10n de WordPress
-            // Soporta: __(), _e(), _x(), _ex(), esc_html__(), esc_html_e(), esc_html_x(), esc_attr__(), esc_attr_e(), esc_attr_x()
-            // Captura el String original de manera exacta, soportando comillas simples y dobles.
             const regexGettext = /(?:__|__|_e|_x|_ex|esc_html__|esc_html_e|esc_html_x|esc_attr__|esc_attr_e|esc_attr_x)\s*\(\s*('(?:[^'\\]|\\.)*'|"(?:[^"\\]|\\.)*")\s*(?:,\s*('(?:[^'\\]|\\.)*'|"(?:[^"\\]|\\.)*")\s*)?(?:,\s*('(?:[^'\\]|\\.)*'|"(?:[^"\\]|\\.)*")\s*)?\)/g;
 
             for (const file of phpFiles) {
                 const text = await readFileAsText(file);
                 let match;
 
-                // Reset regex cursor
                 regexGettext.lastIndex = 0;
 
                 while ((match = regexGettext.exec(text)) !== null) {
                     let rawMsgid = match[1];
-                    let rawDomain = match[2] || ""; // Segundo parámetro si existe (Domain o Contexto en _x)
+                    let rawDomain = match[2] || ""; 
 
-                    // Extraer los contenidos internos de las comillas
                     const msgid = cleanQuotes(rawMsgid);
                     const domain = cleanQuotes(rawDomain);
 
-                    // Si hay filtro de text domain activo, contrastar
                     if (domainFilter && domain !== domainFilter) {
                         continue;
                     }
@@ -959,7 +981,7 @@
             const keys = Object.keys(extractedStrings);
 
             if (keys.length === 0) {
-                showToast("No se encontró ninguna cadena compatible con localización en los archivos.");
+                showToast("No se encontró ninguna cadena compatible.");
                 return;
             }
 
@@ -971,9 +993,9 @@
                 const filesArray = Array.from(extractedStrings[msgid].files).join(', ');
 
                 tr.innerHTML = `
-                    <td class="py-3 px-4 text-xs text-slate-400 dark:text-zinc-500">${counter++}</td>
-                    <td class="py-3 px-4 text-slate-900 dark:text-zinc-200 truncate max-w-lg font-sans text-sm">${escapeHtml(msgid)}</td>
-                    <td class="py-3 px-4 text-xs text-slate-500 dark:text-zinc-400 font-mono">${escapeHtml(filesArray)}</td>
+                    <td class="py-3 px-3 text-xs text-slate-400 dark:text-zinc-500">${counter++}</td>
+                    <td class="py-3 px-3 text-slate-900 dark:text-zinc-200 truncate max-w-xs sm:max-w-lg font-sans text-xs sm:text-sm">${escapeHtml(msgid)}</td>
+                    <td class="py-3 px-3 text-[10px] sm:text-xs text-slate-500 dark:text-zinc-400 font-mono">${escapeHtml(filesArray)}</td>
                 `;
                 scannerTableBody.appendChild(tr);
             }
@@ -1006,7 +1028,6 @@
                 });
             });
 
-            // Forzar UI a que limpie el dropZone anterior del traductor
             dropZone.classList.add('hidden');
             workspace.classList.remove('hidden');
             fileStatsBox.classList.remove('hidden');
@@ -1016,7 +1037,7 @@
             renderTable();
             saveToLocalStorage();
 
-            showToast("¡Se han importado todas las cadenas al Traductor de .PO!");
+            showToast("¡Cadenas importadas al Traductor!");
             switchTab('translate');
         });
 
@@ -1159,7 +1180,7 @@
             a.download = `${originalFileName}-${langTarget.value}.mo`;
             a.click();
             URL.revokeObjectURL(url);
-            showToast("¡Archivo binario .MO compilado y descargado!");
+            showToast("¡Archivo binario .MO descargado!");
         });
 
 
@@ -1189,7 +1210,7 @@
                         exportBar.classList.remove('hidden');
                         updateStats();
                         renderTable();
-                        showToast("Sesión de traducción previa restaurada.");
+                        showToast("Sesión restaurada.");
                     }
                 } catch(e) {
                     console.error("Error cargando sesión previa", e);
@@ -1206,7 +1227,7 @@
             a.download = filename;
             a.click();
             URL.revokeObjectURL(url);
-            showToast(`¡Archivo ${filename} descargado!`);
+            showToast(`¡Archivo descargado!`);
         }
 
         function escapeHtml(text) {
