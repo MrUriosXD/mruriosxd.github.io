@@ -42,24 +42,20 @@ $ytDlpCmd = "yt-dlp --no-playlist --restrict-filenames ";
 switch ($type) {
     case 'audio':
         $ytDlpCmd .= "-x --audio-format mp3 --audio-quality 0 ";
-        $expectedExt = 'mp3';
         break;
     case 'video':
-        // Descarga solo video (suele venir sin audio si es máxima calidad, o en formato bruto)
         $ytDlpCmd .= "-f \"videoonly\" --merge-output-format mp4 ";
-        $expectedExt = 'mp4';
         break;
     case 'all':
     default:
         // Intenta descargar la mejor combinación de video + audio unificada en MP4
         $ytDlpCmd .= "-f \"bv*[ext=mp4]+ba[ext=m4a]/b[ext=mp4]\" --merge-output-format mp4 ";
-        $expectedExt = 'mp4';
         break;
 }
 
 // Si se solicita recorte, aplicamos los argumentos nativos de yt-dlp usando ffmpeg de fondo
 if ($trim) {
-    // Sanitizar tiempos para evitar inyecciones de comandos
+    // Sanitizar tiempos para evitar inyecciones de comandos (patrón 00:00:00)
     $start = preg_replace('/[^0-9:]/', '', $start);
     $end = preg_replace('/[^0-9:]/', '', $end);
     $ytDlpCmd .= "--downloader ffmpeg --downloader-args \"ffmpeg:-ss {$start} -to {$end}\" ";
@@ -68,7 +64,7 @@ if ($trim) {
 // Añadir la plantilla de salida y escapar la URL para la terminal
 $ytDlpCmd .= "-o " . escapeshellarg($outputTemplate) . " " . escapeshellarg($url);
 
-// Ejecutar el comando del sistema
+// Ejecutar el comando del sistema redireccionando errores
 exec($ytDlpCmd . " 2>&1", $outputLines, $returnCode);
 
 if ($returnCode !== 0) {
@@ -80,7 +76,7 @@ if ($returnCode !== 0) {
     exit;
 }
 
-// Localizar el archivo descargado final (ya que las extensiones reales pueden variar sutilmente)
+// Localizar el archivo descargado final
 $downloadedFiles = glob($outputDir . $fileId . '.*');
 if (empty($downloadedFiles)) {
     echo json_encode(['success' => false, 'error' => 'No se pudo localizar el archivo convertido en el servidor.']);
@@ -90,7 +86,7 @@ if (empty($downloadedFiles)) {
 $filePath = $downloadedFiles[0];
 $fileName = basename($filePath);
 
-// Devolver la URL temporal para que el cliente proceda a la descarga real
+// Devolver la ruta del puente de descarga al cliente
 echo json_encode([
     'success' => true,
     'file' => 'download_file.php?file=' . urlencode($fileName)
