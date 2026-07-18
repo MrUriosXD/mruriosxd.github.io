@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Downloader Pro - Convertidor Web</title>
+    <!-- Tailwind CSS para un diseño premium y responsive -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        body {
+            background-color: #0b0c10;
+            background-image: radial-gradient(rgba(224, 30, 90, 0.05) 1px, transparent 0);
+            background-size: 40px 40px;
+        }
+    </style>
+</head>
+<body class="text-gray-200 min-h-screen flex items-center justify-center p-4 antialiased">
+
+    <!-- Contenedor Principal de la Web -->
+    <div class="w-full max-w-2xl bg-[#12141c] rounded-xl border border-gray-800/60 shadow-2xl overflow-hidden flex flex-col">
+        
+        <!-- Cabecera de la Herramienta Web -->
+        <div class="bg-[#161922] px-6 py-4 flex items-center justify-between border-b border-gray-800/50">
+            <div class="flex items-center gap-3">
+                <!-- Icono de Descarga -->
+                <div class="bg-[#e01e5a] p-2 rounded-lg flex items-center justify-center shadow-md shadow-[#e01e5a]/20">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"/>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-base font-bold tracking-wide text-white uppercase flex items-center gap-1.5">
+                        Video Downloader <span class="text-[#e01e5a]">Pro</span>
+                    </h1>
+                    <p class="text-xs text-gray-400 font-medium">Descarga y recorta clips directamente desde tu navegador</p>
+                </div>
+            </div>
+            <span class="text-xs font-bold text-[#e01e5a] bg-[#e01e5a]/10 px-2.5 py-1 rounded-md border border-[#e01e5a]/20 hidden sm:inline-block">
+                Web App
+            </span>
+        </div>
+
+        <!-- Cuerpo de la Aplicación Web -->
+        <div class="p-6 space-y-6">
+            
+            <!-- Selector de Plataformas Soportadas (Visual) -->
+            <div class="space-y-2">
+                <span class="text-[11px] font-bold text-gray-500 uppercase tracking-wider">Plataformas compatibles</span>
+                <div class="flex flex-wrap gap-2" id="platform-tabs">
+                    <button class="px-3 py-1 rounded-md text-xs font-semibold bg-[#e01e5a] text-white border border-[#e01e5a]">YouTube</button>
+                    <button class="px-3 py-1 rounded-md text-xs font-semibold bg-[#1a1d26] text-gray-400 hover:text-gray-200 transition-all">TikTok</button>
+                    <button class="px-3 py-1 rounded-md text-xs font-semibold bg-[#1a1d26] text-gray-400 hover:text-gray-200 transition-all">Instagram</button>
+                    <button class="px-3 py-1 rounded-md text-xs font-semibold bg-[#1a1d26] text-gray-400 hover:text-gray-200 transition-all">X / Twitter</button>
+                    <button class="px-3 py-1 rounded-md text-xs font-semibold bg-[#1a1d26] text-gray-400 hover:text-gray-200 transition-all">Facebook</button>
+                </div>
+            </div>
+
+            <!-- Entrada de la URL -->
+            <div class="space-y-2">
+                <label class="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
+                    <span class="w-1 h-3.5 bg-[#e01e5a] inline-block rounded-sm"></span> Introduce el enlace del vídeo
+                </label>
+                <div class="flex gap-2">
+                    <input type="text" id="video-url" placeholder="Pega aquí el enlace de YouTube, TikTok, etc..." 
+                        class="flex-1 bg-[#161922] border border-gray-800 rounded-lg px-4 py-2.5 text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:border-[#e01e5a] transition-all">
+                    <button onclick="pasteUrl()" class="bg-[#1a1d26] hover:bg-[#222632] border border-gray-700 text-gray-300 px-4 py-2.5 rounded-lg text-xs font-semibold transition-all active:scale-95">
+                        Pegar
+                    </button>
+                </div>
+            </div>
+
+            <!-- Opciones del Convertidor -->
+            <div class="bg-[#161922]/40 border border-gray-800/60 rounded-xl p-5 space-y-5">
+                <label class="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
+                    <span class="w-1 h-3.5 bg-[#e01e5a] inline-block rounded-sm"></span> Ajustes de conversión
+                </label>
+
+                <!-- Formato de salida -->
+                <div class="flex flex-wrap items-center gap-4 text-sm">
+                    <span class="text-xs text-gray-400 font-medium">Formato:</span>
+                    <div class="flex bg-[#161922] p-1 rounded-lg border border-gray-800" id="type-selector">
+                        <button onclick="setType('all')" id="btn-all" class="px-4 py-1.5 rounded-md text-xs font-medium bg-[#e01e5a] text-white flex items-center gap-1.5 transition-all">
+                            🎬 MP4 (Video + Audio)
+                        </button>
+                        <button onclick="setType('video')" id="btn-video" class="px-4 py-1.5 rounded-md text-xs font-medium text-gray-400 hover:text-gray-200 flex items-center gap-1.5 transition-all">
+                            📹 MP4 (Solo Video)
+                        </button>
+                        <button onclick="setType('audio')" id="btn-audio" class="px-4 py-1.5 rounded-md text-xs font-medium text-gray-400 hover:text-gray-200 flex items-center gap-1.5 transition-all">
+                            🎵 MP3 (Audio)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Recortar Segmento -->
+                <div class="flex flex-wrap items-center gap-4 pt-4 border-t border-gray-800/50">
+                    <label class="flex items-center gap-2 text-xs font-medium text-gray-300 cursor-pointer select-none">
+                        <input type="checkbox" id="trim-checkbox" onchange="toggleTrimInputs()" class="rounded border-gray-700 text-[#e01e5a] bg-[#161922] focus:ring-0 w-4 h-4">
+                        ✂️ Recortar fragmento de tiempo
+                    </label>
+                    <div class="flex items-center gap-3 text-xs opacity-40 transition-all duration-300" id="trim-inputs">
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-gray-500">Desde:</span>
+                            <input type="text" value="00:00:00" disabled class="w-20 bg-[#161922] border border-gray-800 rounded px-2 py-1 text-center font-mono focus:outline-none text-gray-300">
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-gray-500">Hasta:</span>
+                            <input type="text" value="00:01:00" disabled class="w-20 bg-[#161922] border border-gray-800 rounded px-2 py-1 text-center font-mono focus:outline-none text-gray-300">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progreso Web -->
+            <div id="progress-container" class="hidden space-y-2 pt-2">
+                <div class="flex justify-between text-xs font-semibold">
+                    <span id="progress-status" class="text-gray-400">Procesando enlace en el servidor...</span>
+                    <span id="progress-percent" class="text-[#e01e5a] font-mono">0%</span>
+                </div>
+                <div class="w-full bg-[#161922] rounded-full h-2 overflow-hidden border border-gray-800">
+                    <div id="progress-bar" class="bg-[#e01e5a] h-full w-0 transition-all duration-300 shadow-[0_0_10px_rgba(224,30,90,0.5)]"></div>
+                </div>
+            </div>
+
+            <!-- Botón de Acción Principal -->
+            <div class="pt-2">
+                <button onclick="startDownload()" id="download-btn" class="w-full bg-[#e01e5a] hover:bg-[#c2144b] text-white font-bold py-4 rounded-xl text-sm tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-[#e01e5a]/20 active:scale-[0.99] transition-all cursor-pointer">
+                    🚀 CONVERTIR Y DESCARGAR
+                </button>
+            </div>
+        </div>
+
+        <!-- Pie de página web limpia -->
+        <div class="bg-[#161922] px-6 py-3 text-[11px] text-gray-500 border-t border-gray-800/40 font-medium flex justify-between">
+            <span>Los archivos se guardarán automáticamente en tu carpeta de Descargas del navegador.</span>
+            <span class="text-[#e01e5a] font-bold">100% Online</span>
+        </div>
+    </div>
+
+    <!-- Script de comportamiento Web conectado al Backend -->
+    <script>
+        // Guardar estado interno del formato seleccionado
+        let currentType = 'all';
+
+        // Cambiar entre pestañas de plataformas de forma visual
+        const tabs = document.querySelectorAll('#platform-tabs button');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.className = "px-3 py-1 rounded-md text-xs font-semibold bg-[#1a1d26] text-gray-400 hover:text-gray-200 transition-all");
+                tab.className = "px-3 py-1 rounded-md text-xs font-semibold bg-[#e01e5a] text-white border border-[#e01e5a]";
+            });
+        });
+
+        // Intentar pegar contenido real del portapapeles
+        function pasteUrl() {
+            navigator.clipboard.readText().then(text => {
+                if(text && text.trim().startsWith('http')) {
+                    document.getElementById('video-url').value = text.trim();
+                } else if(text) {
+                    document.getElementById('video-url').value = text;
+                }
+            }).catch(err => {
+                // Fallback por defecto en caso de denegación de permisos del navegador
+                document.getElementById('video-url').value = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
+            });
+        }
+
+        // Tipo de descarga (MP4 Completo, Solo Video, MP3)
+        function setType(type) {
+            currentType = type;
+            const btnAll = document.getElementById('btn-all');
+            const btnVideo = document.getElementById('btn-video');
+            const btnAudio = document.getElementById('btn-audio');
+            
+            const active = "px-4 py-1.5 rounded-md text-xs font-medium bg-[#e01e5a] text-white flex items-center gap-1.5 transition-all shadow-md";
+            const inactive = "px-4 py-1.5 rounded-md text-xs font-medium text-gray-400 hover:text-gray-200 flex items-center gap-1.5 transition-all";
+            
+            btnAll.className = type === 'all' ? active : inactive;
+            btnVideo.className = type === 'video' ? active : inactive;
+            btnAudio.className = type === 'audio' ? active : inactive;
+        }
+
+        // Inputs de tiempo
+        function toggleTrimInputs() {
+            const checkbox = document.getElementById('trim-checkbox');
+            const inputsContainer = document.getElementById('trim-inputs');
+            const inputs = inputsContainer.querySelectorAll('input');
+            
+            if(checkbox.checked) {
+                inputsContainer.classList.remove('opacity-40');
+                inputs.forEach(input => input.disabled = false);
+            } else {
+                inputsContainer.classList.add('opacity-40');
+                inputs.forEach(input => input.disabled = true);
+            }
+        }
+
+        // Conexión real via Fetch API con download.php
+        function startDownload() {
+            const urlInput = document.getElementById('video-url').value.trim();
+            if(!urlInput) {
+                alert('Por favor, introduce una URL válida.');
+                return;
+            }
+
+            const isTrimEnabled = document.getElementById('trim-checkbox').checked;
+            const timeInputs = document.getElementById('trim-inputs').querySelectorAll('input');
+            const startTime = timeInputs[0].value.trim();
+            const endTime = timeInputs[1].value.trim();
+
+            // Elementos de la UI de progreso
+            document.getElementById('progress-container').classList.remove('hidden');
+            const btn = document.getElementById('download-btn');
+            
+            btn.disabled = true;
+            btn.classList.add('opacity-50');
+            btn.innerText = "PROCESANDO EN SERVIDOR...";
+            
+            const progressBar = document.getElementById('progress-bar');
+            const progressPercent = document.getElementById('progress-percent');
+            const progressStatus = document.getElementById('progress-status');
+
+            // Feedback visual fluido proporcional a las etapas normales del backend
+            let percent = 0;
+            progressStatus.innerText = "Conectando con el servidor...";
+            
+            const interval = setInterval(() => {
+                if (percent < 80) {
+                    percent += Math.floor(Math.random() * 4) + 1;
+                } else if (percent >= 80 && percent < 97) {
+                    percent += 0.3; // Desaceleración en espera de la respuesta pesada de yt-dlp
+                }
+                
+                const roundedPercent = Math.floor(percent);
+                progressBar.style.width = roundedPercent + '%';
+                progressPercent.innerText = roundedPercent + '%';
+
+                if(roundedPercent > 15 && roundedPercent < 60) {
+                    progressStatus.innerText = "Extraiendo flujos multimedia de la plataforma...";
+                } else if(roundedPercent >= 60) {
+                    progressStatus.innerText = isTrimEnabled ? "FFmpeg cortando el segmento exacto..." : "Consolidando pistas de descarga directa...";
+                }
+            }, 300);
+
+            // Payload para enviar al script PHP
+            const payload = {
+                url: urlInput,
+                type: currentType,
+                trim: isTrimEnabled,
+                start: startTime,
+                end: endTime
+            };
+
+            // Ejecución HTTP POST
+            fetch('download.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Error en la respuesta de red');
+                return response.json();
+            })
+            .then(data => {
+                clearInterval(interval);
+                
+                if (data.success && data.file) {
+                    progressBar.style.width = '100%';
+                    progressPercent.innerText = '100%';
+                    progressStatus.innerText = "¡Listo! Iniciando transferencia al navegador...";
+                    
+                    // Forzar la descarga abriendo el puente de transferencia de archivos
+                    window.location.href = data.file;
+                } else {
+                    progressStatus.innerText = "Error en el procesamiento.";
+                    alert('Error en el Servidor:\n' + (data.error || 'No se pudo procesar la solicitud.'));
+                    if(data.debug) console.error('Detalles del sistema:', data.debug);
+                }
+            })
+            .catch(error => {
+                clearInterval(interval);
+                progressStatus.innerText = "Error de conexión.";
+                alert('No se pudo establecer comunicación con el backend php.');
+                console.error(error);
+            })
+            .finally(() => {
+                btn.disabled = false;
+                btn.classList.remove('opacity-50');
+                btn.innerText = "🚀 CONVERTIR Y DESCARGAR";
+            });
+        }
+    </script>
+</body>
+</html>
